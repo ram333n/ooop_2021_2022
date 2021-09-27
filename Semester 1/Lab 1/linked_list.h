@@ -2,65 +2,22 @@
 
 template<typename T>
 class LinkedList {
+public:
+	struct Node {
+		T value;
+		Node* next, * prev;
+		Node() : next(nullptr), prev(nullptr) {};
+		Node(const T& new_value) : value(new_value), next(nullptr), prev(nullptr) {};
+	};
 
 private:
-	struct Node;
 	size_t size = 0;
 	Node* head = nullptr;
 	Node* tail = nullptr;
 
 public:	
-	class Iterator {
-	public:
-		Iterator() : node_ptr(nullptr) {};
-		Iterator(Node* other_node) : node_ptr(other_node) {};
-		T& operator*() const {
-			return node_ptr->value;
-		}
-
-		T* operator->() {
-			return &node_ptr->value;
-		}
-
-		Iterator& operator++() {
-			if (node_ptr) {
-				node_ptr = node_ptr->next;
-			}
-			return *this;
-		}
-
-		Iterator operator++(int) {
-			Iterator next_it = *this;
-			next_it++;
-			return next_it;
-		}
-
-		Iterator& operator--() {
-			if (node_ptr) {
-				node_ptr = node_ptr->prev;
-			}
-			return *this;
-		}
-
-		Iterator operator--(int) {
-			Iterator prev_it = *this;
-			++*this;
-			return prev_it;
-		}
-
-		bool operator==(const Iterator& other) {
-			return node_ptr == other.node_ptr;
-		}
-
-		bool operator!=(const Iterator& other) {
-			return node_ptr != other.node_ptr;
-		}
-
-		Node* node_ptr;
-	};
-
-
 	LinkedList() {};
+
 	void PushBack(const T& new_value) {
 		Node* to_push = new Node(new_value);
 		if (!tail) {
@@ -69,45 +26,40 @@ public:
 		else {
 			tail->next = to_push;
 		}
-
+		to_push->prev = tail;
 		tail = to_push;
 		++size;
 	}
 
 	void PushFront(const T& new_value) {
 		Node* to_push = new Node(new_value);
-		if (!begin) {
+		if (!head) {
 			tail = to_push;
 		}
 		else {
 			head->prev = to_push;
 		}
-
+		to_push->next = head;
 		head = to_push;
 		++size;
 	}
 
-	Iterator Insert(const T& new_value, Iterator pos_to_insert) {
-		if (!pos_to_insert.node_ptr) {
-			return Iterator();
+	void Insert(const T& new_value, Node* pos_to_insert) {
+		if (!pos_to_insert || !head) {
+			return;
 		}
 
-		Iterator result;
-		if (!head) {
+		if (pos_to_insert == head) {
 			PushFront(new_value);
-			result(head);
 		}
 		else {
 			Node* to_insert = new Node(new_value);
-			pos_to_insert.node_ptr->prev->next = to_insert;
-			to_insert->prev = pos_to_insert.node_ptr->prev;
-			to_insert->next = pos_to_insert.node_ptr;
-			pos_to_insert.node_ptr->prev = to_insert;
-			result(to_insert);
+			pos_to_insert->prev->next = to_insert;
+			to_insert->prev = pos_to_insert->prev;
+			to_insert->next = pos_to_insert;
+			pos_to_insert->prev = to_insert;
+			++size;
 		}
-
-		++size;
-		return result;
 	}
 
 	bool Empty() const {
@@ -118,50 +70,52 @@ public:
 		return size;
 	}
 
-	void Remove(Iterator it) {
-		if (!it.node_ptr) {
+	void Remove(Node* to_remove) {
+		if (!to_remove) {
 			return;
 		}
 
-		if (it.node_ptr->prev) {
-			it.node_ptr->prev->next = it.node_ptr->next;
+		if (to_remove->prev) {
+			to_remove->prev->next = to_remove->next;
 		}
 		else {
-			head = it.node_ptr->next;
+			head = to_remove->next;
 		}
 
-		if (it.node_ptr->next) {
-			it.node_ptr->next->prev = it.node_ptr->prev;
+		if (to_remove->next) {
+			to_remove->next->prev = to_remove->prev;
 		}
 		else {
-			tail = it.node_ptr->prev;
+			tail = to_remove->prev;
 		}
 
-		delete it.node_ptr;
+		delete to_remove;
 		--size;
 	}
 
 	void PopBack() {
-		Remove(Iterator(tail));
+		Remove(tail);
 	}
 
 	void PopFront() {
-		Remove(Iterator(head));
+		Remove(head);
 	}
 
-	Iterator begin() {
-		return Iterator(head);
+	Node* GetHead() {
+		return head;
 	}
 
-	Iterator end() {
-		return Iterator();
+	Node* GetTail() {
+		return tail;
 	}
 
-	const Iterator begin() const {
-		return Iterator(head);
-	}
-	const Iterator end() const {
-		return Iterator();
+	Node* Find(const T& to_find) {
+		Node* current = GetHead();
+		while(current&&current->value != to_find) {
+			current = current->next;
+		}
+
+		return current;
 	}
 
 	~LinkedList() {
@@ -171,11 +125,5 @@ public:
 	}
 };
 
-template<typename T>
-struct LinkedList<T>::Node {
-	T value;
-	Node* next, * prev;
-	Node() : next(nullptr), prev(nullptr) {};
-	Node(const T& new_value) : value(new_value), next(nullptr), prev(nullptr) {};
-};
+
 
