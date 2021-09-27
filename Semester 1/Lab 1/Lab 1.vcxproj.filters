@@ -27,12 +27,18 @@
     <ClInclude Include="array_list.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="graphs.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="doctest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="graphs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

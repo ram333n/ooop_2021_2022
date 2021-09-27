@@ -139,10 +139,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="graphs.cpp" />
     <ClCompile Include="doctest.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="graphs.h" />
     <ClInclude Include="array_list.h" />
     <ClInclude Include="doctest.h" />
     <ClInclude Include="linked_list.h" />

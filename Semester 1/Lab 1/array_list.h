@@ -89,7 +89,7 @@ void ArrayList<T>::PushBack(T to_push) {
 
 template<typename T>
 bool ArrayList<T>::Remove(int to_remove) {
-	if (to_remove < 0 || to_remove >= static_cast<int>(size)) {
+	if (to_remove < 0 || to_remove >= static_cast<int>(size) ) {
 		return false;
 	}
 
