@@ -1,129 +1,157 @@
 #pragma once
+#include <iostream>
 
 template<typename T>
-class LinkedList {
-public:
-	struct Node {
-		T value;
-		Node* next, * prev;
-		Node() : next(nullptr), prev(nullptr) {};
-		Node(const T& new_value) : value(new_value), next(nullptr), prev(nullptr) {};
-	};
+struct Node {
+	T value;
+	Node* next, * prev;
+	Node() : next(nullptr), prev(nullptr) {};
+	Node(T new_value) : value(std::move(new_value)), next(nullptr), prev(nullptr) {};
+};
 
+template<typename T>
+class LinkedList {	
 private:
 	size_t size = 0;
-	Node* head = nullptr;
-	Node* tail = nullptr;
+	Node<T>* head = nullptr;
+	Node<T>* tail = nullptr;
 
 public:	
 	LinkedList() {};
 
-	void PushBack(const T& new_value) {
-		Node* to_push = new Node(new_value);
-		if (!tail) {
-			head = to_push;
-		}
-		else {
-			tail->next = to_push;
-		}
-		to_push->prev = tail;
-		tail = to_push;
-		++size;
-	}
+	void PushBack(T new_value);
+	void PushFront(T new_value);
+	void Insert(T new_value, Node<T>* pos_to_insert);
 
-	void PushFront(const T& new_value) {
-		Node* to_push = new Node(new_value);
-		if (!head) {
-			tail = to_push;
-		}
-		else {
-			head->prev = to_push;
-		}
-		to_push->next = head;
-		head = to_push;
-		++size;
-	}
+	bool Empty() const;
+	size_t Size() const;
 
-	void Insert(const T& new_value, Node* pos_to_insert) {
-		if (!pos_to_insert || !head) {
-			return;
-		}
+	void Remove(Node<T>* to_remove);
+	void PopBack();
+	void PopFront();
 
-		if (pos_to_insert == head) {
-			PushFront(new_value);
-		}
-		else {
-			Node* to_insert = new Node(new_value);
-			pos_to_insert->prev->next = to_insert;
-			to_insert->prev = pos_to_insert->prev;
-			to_insert->next = pos_to_insert;
-			pos_to_insert->prev = to_insert;
-			++size;
-		}
-	}
+	Node<T>* GetHead();
+	Node<T>* GetTail();
+	Node<T>* Find(const T& to_find);
 
-	bool Empty() const {
-		return head == nullptr;
-	}
-
-	size_t Size() const {
-		return size;
-	}
-
-	void Remove(Node* to_remove) {
-		if (!to_remove) {
-			return;
-		}
-
-		if (to_remove->prev) {
-			to_remove->prev->next = to_remove->next;
-		}
-		else {
-			head = to_remove->next;
-		}
-
-		if (to_remove->next) {
-			to_remove->next->prev = to_remove->prev;
-		}
-		else {
-			tail = to_remove->prev;
-		}
-
-		delete to_remove;
-		--size;
-	}
-
-	void PopBack() {
-		Remove(tail);
-	}
-
-	void PopFront() {
-		Remove(head);
-	}
-
-	Node* GetHead() {
-		return head;
-	}
-
-	Node* GetTail() {
-		return tail;
-	}
-
-	Node* Find(const T& to_find) {
-		Node* current = GetHead();
-		while(current&&current->value != to_find) {
-			current = current->next;
-		}
-
-		return current;
-	}
-
-	~LinkedList() {
-		while (head) {
-			PopFront();
-		}
-	}
+	~LinkedList();
 };
 
 
 
+template<typename T>
+void LinkedList<T>::PushBack(T new_value) {
+	Node<T>* to_push = new Node<T>(std::move(new_value));
+	if (!tail) {
+		head = to_push;
+	}
+	else {
+		tail->next = to_push;
+	}
+	to_push->prev = tail;
+	tail = to_push;
+	++size;
+}
+
+template<typename T>
+void LinkedList<T>::PushFront(T new_value) {
+	Node<T>* to_push = new Node<T>(std::move(new_value));
+	if (!head) {
+		tail = to_push;
+	}
+	else {
+		head->prev = to_push;
+	}
+	to_push->next = head;
+	head = to_push;
+	++size;
+}
+
+template<typename T>
+void LinkedList<T>::Insert(T new_value, Node<T>* pos_to_insert) {
+	if (!pos_to_insert || !head) {
+		return;
+	}
+
+	if (pos_to_insert == head) {
+		PushFront(new_value);
+	}
+	else {
+		Node<T>* to_insert = new Node<T>(std::move(new_value));
+		pos_to_insert->prev->next = to_insert;
+		to_insert->prev = pos_to_insert->prev;
+		to_insert->next = pos_to_insert;
+		pos_to_insert->prev = to_insert;
+		++size;
+	}
+}
+
+template<typename T>
+bool LinkedList<T>::Empty() const {
+	return head == nullptr;
+}
+
+template<typename T>
+size_t LinkedList<T>::Size() const {
+	return size;
+}
+
+template<typename T>
+void LinkedList<T>::Remove(Node<T>* to_remove) {
+	if (!to_remove) {
+		return;
+	}
+
+	if (to_remove->prev) {
+		to_remove->prev->next = to_remove->next;
+	}
+	else {
+		head = to_remove->next;
+	}
+
+	if (to_remove->next) {
+		to_remove->next->prev = to_remove->prev;
+	}
+	else {
+		tail = to_remove->prev;
+	}
+
+	delete to_remove;
+	--size;
+}
+
+template<typename T>
+void LinkedList<T>::PopBack() {
+	Remove(tail);
+}
+
+template<typename T>
+void LinkedList<T>::PopFront() {
+	Remove(head);
+}
+
+template<typename T>
+Node<T>* LinkedList<T>::GetHead() {
+	return head;
+}
+
+template<typename T>
+Node<T>* LinkedList<T>::GetTail() {
+	return tail;
+}
+
+template<typename T>
+Node<T>* LinkedList<T>::Find(const T& to_find) {
+	Node<T>* current = GetHead();
+	while (current && current->value != to_find) {
+		current = current->next;
+	}
+	return current;
+}
+
+template<typename T>
+LinkedList<T>::~LinkedList() {
+	while (head) {
+		PopFront();
+	}
+}
