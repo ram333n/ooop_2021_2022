@@ -98,7 +98,7 @@ size_t LinkedList<T>::Size() const {
 
 template<typename T>
 void LinkedList<T>::Remove(Node<T>* to_remove) {
-	if (!to_remove) {
+	if (!to_remove||!head) {
 		return;
 	}
 

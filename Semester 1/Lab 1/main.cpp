@@ -1,6 +1,7 @@
 #include "doctest.h"
 #include "linked_list.h"
 #include "array_list.h"
+#include "graphs.h"
 
 #include <iostream>
 #include <string>
@@ -244,6 +245,101 @@ TEST_CASE("Test simple iterators of ArrayList<int> on some of stl algorithms") {
     auto equal_range_res = std::equal_range(array_list.begin(), array_list.end(), 10);
     CHECK(equal_range_res.second - equal_range_res.first == std::count(array_list.begin(), array_list.end(), 10));
 }
+
+TEST_CASE("Adjacency list") {
+    AdjacencyList graph(6);
+    graph.AddEdge(0, 3);
+    graph.AddEdge(0, 3);
+
+    graph.AddEdge(0, 4);
+    graph.AddEdge(0, 5);
+
+    graph.AddEdge(1, 3);
+    graph.AddEdge(1, 4);
+    graph.AddEdge(1, 5);
+
+    graph.AddEdge(2, 3);
+    graph.AddEdge(2, 4);
+    graph.AddEdge(2, 5);
+
+    CHECK(graph.IsConnected() == true);
+    CHECK(graph.IsEdgeExist(0, 3) == true);
+    CHECK(graph.IsEdgeExist(0, 4) == true);
+    CHECK(graph.IsEdgeExist(0, 5) == true);
+    CHECK(graph.IsEdgeExist(1, 3) == true);
+    CHECK(graph.IsEdgeExist(1, 4) == true);
+    CHECK(graph.IsEdgeExist(1, 5) == true);
+    CHECK(graph.IsEdgeExist(1, 3) == true);
+    CHECK(graph.IsEdgeExist(1, 4) == true);
+    CHECK(graph.IsEdgeExist(1, 5) == true);
+
+    CHECK(graph.DistanceBetweenTwoVertices(0, 2) == 2);
+    CHECK(graph.DistanceBetweenTwoVertices(0, 1) == 2);
+    CHECK(graph.DistanceBetweenTwoVertices(0, 5) == 1);
+    CHECK(graph.DistanceBetweenTwoVertices(0, 0) == 0);
+
+    graph.RemoveVertex(0);
+    graph.RemoveVertex(3);
+
+    CHECK(graph.IsConnected() == true);
+    CHECK(graph.DistanceBetweenTwoVertices(1, 2) == 2);
+    graph.RemoveEdge(2, 4);
+    graph.RemoveEdge(1, 5);
+
+    CHECK(graph.IsConnected() == false);
+    CHECK(graph.DistanceBetweenTwoVertices(2, 4) == 0);
+}
+
+TEST_CASE("Adjacency matrix") {
+    AdjacencyMatrix graph(6);
+    graph.AddEdge(0, 3);
+    graph.AddEdge(0, 3);
+
+    graph.AddEdge(0, 4);
+    graph.AddEdge(0, 5);
+
+    graph.AddEdge(1, 3);
+    graph.AddEdge(1, 4);
+    graph.AddEdge(1, 5);
+
+    graph.AddEdge(2, 3);
+    graph.AddEdge(2, 4);
+    graph.AddEdge(2, 5);
+
+    CHECK(graph.IsConnected() == true);
+    CHECK(graph.IsEdgeExist(0, 3) == true);
+    CHECK(graph.IsEdgeExist(0, 4) == true);
+    CHECK(graph.IsEdgeExist(0, 5) == true);
+    CHECK(graph.IsEdgeExist(1, 3) == true);
+    CHECK(graph.IsEdgeExist(1, 4) == true);
+    CHECK(graph.IsEdgeExist(1, 5) == true);
+    CHECK(graph.IsEdgeExist(1, 3) == true);
+    CHECK(graph.IsEdgeExist(1, 4) == true);
+    CHECK(graph.IsEdgeExist(1, 5) == true);
+
+    CHECK(graph.DistanceBetweenTwoVertices(0, 2) == 2);
+    CHECK(graph.DistanceBetweenTwoVertices(0, 1) == 2);
+    CHECK(graph.DistanceBetweenTwoVertices(0, 5) == 1);
+    CHECK(graph.DistanceBetweenTwoVertices(0, 0) == 0);
+
+    graph.RemoveVertex(0);
+    graph.RemoveVertex(3);
+
+    CHECK(graph.IsConnected() == true);
+    CHECK(graph.DistanceBetweenTwoVertices(1, 2) == 2);
+    graph.RemoveEdge(2, 4);
+    graph.RemoveEdge(1, 5);
+
+    CHECK(graph.IsEdgeExist(2, 4) == false);
+    CHECK(graph.IsEdgeExist(1, 5) == false);
+
+    CHECK(graph.IsConnected() == false);
+    CHECK(graph.DistanceBetweenTwoVertices(2, 4) == 0);
+    graph.AddEdge(2, 4);
+
+    CHECK(graph.IsConnected() == true);
+}
+
 
 //int main()
 //{
