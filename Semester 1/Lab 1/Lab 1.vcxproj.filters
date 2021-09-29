@@ -30,6 +30,12 @@
     <ClInclude Include="graphs.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="figures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sorting_algorithms.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -39,6 +45,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="graphs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="figures.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

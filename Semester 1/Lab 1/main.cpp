@@ -1,7 +1,9 @@
 #include "doctest.h"
-#include "linked_list.h"
-#include "array_list.h"
+#include "sorting_algorithms.h"
 #include "graphs.h"
+#include "figures.h"
+#include "profile.h"
+#include "linked_list.h"
 
 #include <iostream>
 #include <string>
@@ -340,8 +342,129 @@ TEST_CASE("Adjacency matrix") {
     CHECK(graph.IsConnected() == true);
 }
 
+TEST_CASE("Test reflections") {
+    Point p_1 = { 1,1 };
+    Line l_1 = { 1,1,0 };
+    Point exp_p_1 = { -1,-1 };
+    CHECK(ReflectPoint(p_1, l_1) == exp_p_1);
 
-//int main()
-//{
-//    std::cout << "Hello World!\n";
-//}
+    Point p_2 = { 1,2 };
+    Line l_2 = { 1,-2,-2 };
+    Point exp_p_2 = { 3,-2 };
+
+    CHECK(ReflectPoint(p_2, l_2) == exp_p_2);
+
+    Point p_3 = { 1,2 };
+    Line l_3 = { 0,1,0 };
+    Point exp_p_3 = { 1,-2 };
+
+    CHECK(ReflectPoint(p_3, l_3) == exp_p_3);
+
+    Point p_4 = { 1,2 };
+    Line l_4 = { 1,0,0 };
+    Point exp_p_4 = { -1,2 };
+
+    CHECK(ReflectPoint(p_4, l_4) == exp_p_4);
+
+    //----------------------------------------
+
+    Line l_5 = { 1,1,0 };
+    Line r = { 1,0,0 };
+    Line exp = { -1,1,0 };
+
+    Line res = ReflectLine(l_5, r);
+
+
+    CHECK(ReflectLine(l_5, r).GetA() == exp.GetA());
+    CHECK(ReflectLine(l_5, r).GetB() == exp.GetB());
+    CHECK(ReflectLine(l_5, r).GetC() == exp.GetC());
+}
+
+
+
+std::tuple<ArrayList<std::string>, LinkedList<std::string>, std::list<std::string>> GenerateListsOfStrings() {
+    ArrayList<std::string> array_list(1000);
+    LinkedList<std::string> linked_list;
+    std::list<std::string> stl_list;
+
+    for (size_t i = 0; i < 1000; ++i) {
+        std::string str(1000, 'a');
+
+        for (char& c : str) {
+            c = 'a' + rand() % 20;
+        }
+
+        array_list[i] = str;
+        linked_list.PushBack(str);
+        stl_list.push_back(str);
+    }
+
+    return { array_list, linked_list, stl_list };
+}
+
+
+
+
+
+TEST_CASE("Tests for sorting algorithms") {
+    auto comparator = [](int lhs, int rhs) {
+        return lhs < rhs;
+    };
+    std::vector<int> source = { 1,6,-2,-4,45,-3,2,1,5,7,56,876,1337,45,21,0 };
+    ArrayList<int> arr_list(source.size());
+    {
+        LinkedList<int> linked_list;
+        std::list<int> stl_list;
+        for (size_t i = 0; i < source.size(); ++i) {
+            arr_list[i] = source[i];
+            linked_list.PushBack(source[i]);
+            stl_list.push_back(source[i]);
+        }
+
+        QuickSort(stl_list.begin(), stl_list.end(), comparator);
+        QuickSort(arr_list, 0, arr_list.Size() - 1, comparator);
+        QuickSort(linked_list.GetHead(), linked_list.GetTail(), comparator);
+
+        CHECK(std::is_sorted(stl_list.begin(), stl_list.end(), comparator) == true);
+        CHECK(std::is_sorted(arr_list.begin(), arr_list.end(), comparator) == true);
+        CHECK(IsSorted(linked_list,comparator)== true);
+    }
+
+    {
+        LinkedList<int> linked_list;
+        std::list<int> stl_list;
+        for (size_t i = 0; i < source.size(); ++i) {
+            arr_list[i] = source[i];
+            linked_list.PushBack(source[i]);
+            stl_list.push_back(source[i]);
+        }
+
+        MergeSort(stl_list.begin(), stl_list.end(), comparator);
+        MergeSort(linked_list, comparator);
+        MergeSort(arr_list.begin(), arr_list.end(), comparator);
+
+
+
+        CHECK(std::is_sorted(stl_list.begin(), stl_list.end(), comparator) == true);
+        CHECK(std::is_sorted(arr_list.begin(), arr_list.end(), comparator) == true);
+        CHECK(IsSorted(linked_list, comparator) == true);
+    }
+
+    {
+        LinkedList<int> linked_list;
+        std::list<int> stl_list;
+        for (size_t i = 0; i < source.size(); ++i) {
+            arr_list[i] = source[i];
+            linked_list.PushBack(source[i]);
+            stl_list.push_back(source[i]);
+        }
+
+        InsertionSort(linked_list, comparator);
+        InsertionSort(arr_list, comparator);
+
+        CHECK(std::is_sorted(arr_list.begin(), arr_list.end(), comparator) == true);
+        CHECK(IsSorted(linked_list, comparator) == true);
+    }      
+
+}
+

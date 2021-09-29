@@ -139,16 +139,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="figures.cpp" />
     <ClCompile Include="graphs.cpp" />
     <ClCompile Include="doctest.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="figures.h" />
     <ClInclude Include="graphs.h" />
     <ClInclude Include="array_list.h" />
     <ClInclude Include="doctest.h" />
     <ClInclude Include="linked_list.h" />
     <ClInclude Include="profile.h" />
+    <ClInclude Include="sorting_algorithms.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

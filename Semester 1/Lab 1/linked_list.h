@@ -18,6 +18,7 @@ private:
 
 public:	
 	LinkedList() {};
+	LinkedList(Node<T>* new_head);
 
 	void PushBack(T new_value);
 	void PushFront(T new_value);
@@ -30,14 +31,25 @@ public:
 	void PopBack();
 	void PopFront();
 
-	Node<T>* GetHead();
-	Node<T>* GetTail();
+	Node<T>* GetHead() const ;
+	Node<T>* GetTail() const ;
 	Node<T>* Find(const T& to_find);
 
 	~LinkedList();
 };
 
-
+template<typename T>
+LinkedList<T>::LinkedList(Node<T>* new_head) {
+	if (!new_head) {
+		size = 1;
+		head = new_head;
+		while (new_head->next) {
+			new_head = new_head->next;
+			++size;
+		}
+		tail = new_head;
+	}
+};
 
 template<typename T>
 void LinkedList<T>::PushBack(T new_value) {
@@ -131,12 +143,12 @@ void LinkedList<T>::PopFront() {
 }
 
 template<typename T>
-Node<T>* LinkedList<T>::GetHead() {
+Node<T>* LinkedList<T>::GetHead() const {
 	return head;
 }
 
 template<typename T>
-Node<T>* LinkedList<T>::GetTail() {
+Node<T>* LinkedList<T>::GetTail() const {
 	return tail;
 }
 
