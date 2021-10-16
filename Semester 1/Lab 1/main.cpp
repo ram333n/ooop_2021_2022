@@ -2,8 +2,6 @@
 #include "sorting_algorithms.h"
 #include "graphs.h"
 #include "figures.h"
-#include "profile.h"
-#include "linked_list.h"
 
 #include <iostream>
 #include <string>
@@ -219,7 +217,7 @@ TEST_CASE("ArrayList<string>::Insert() & ArrayList<string>::Remove()") {
     CHECK(test_empty.Empty() == true);
 }
 
-TEST_CASE("Test simple iterators of ArrayList<int> on some of stl algorithms") {
+TEST_CASE("Test simple iterators of ArrayList<int> on some stl algorithms") {
     std::vector<int> source = { -2, 6, 2, -31, 23, 65, 8743, 432, 65, 12, 7, 5 };
     std::vector<int> copy_source(source.size());
     ArrayList<int> array_list(source.size());
@@ -308,7 +306,7 @@ TEST_CASE("Adjacency matrix") {
     graph.AddEdge(2, 4);
     graph.AddEdge(2, 5);
 
-    CHECK(graph.IsConnected() == true);
+    CHECK(graph.IsConnected());
     CHECK(graph.IsEdgeExist(0, 3) == true);
     CHECK(graph.IsEdgeExist(0, 4) == true);
     CHECK(graph.IsEdgeExist(0, 5) == true);
@@ -380,35 +378,9 @@ TEST_CASE("Test reflections") {
     CHECK(ReflectLine(l_5, r).GetC() == exp.GetC());
 }
 
-
-
-std::tuple<ArrayList<std::string>, LinkedList<std::string>, std::list<std::string>> GenerateListsOfStrings() {
-    ArrayList<std::string> array_list(1000);
-    LinkedList<std::string> linked_list;
-    std::list<std::string> stl_list;
-
-    for (size_t i = 0; i < 1000; ++i) {
-        std::string str(1000, 'a');
-
-        for (char& c : str) {
-            c = 'a' + rand() % 20;
-        }
-
-        array_list[i] = str;
-        linked_list.PushBack(str);
-        stl_list.push_back(str);
-    }
-
-    return { array_list, linked_list, stl_list };
-}
-
-
-
-
-
 TEST_CASE("Tests for sorting algorithms") {
     auto comparator = [](int lhs, int rhs) {
-        return lhs < rhs;
+        return lhs > rhs;
     };
     std::vector<int> source = { 1,6,-2,-4,45,-3,2,1,5,7,56,876,1337,45,21,0 };
     ArrayList<int> arr_list(source.size());

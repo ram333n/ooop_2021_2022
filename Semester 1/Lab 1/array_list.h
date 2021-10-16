@@ -94,7 +94,7 @@ bool ArrayList<T>::Remove(int to_remove) {
 	}
 
 	for (int i = to_remove; i + 1 < static_cast<int>(size); ++i) {
-		data[i] = data[i + 1];
+		data[i] = std::move(data[i + 1]);
 	}
 
 	--size;
