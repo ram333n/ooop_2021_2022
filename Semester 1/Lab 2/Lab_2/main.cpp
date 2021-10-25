@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "timer.h"
 
 #include <QApplication>
 
