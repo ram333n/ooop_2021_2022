@@ -12,12 +12,16 @@ class DoNotDisturbWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit DoNotDisturbWindow(QWidget *parent = nullptr);
+    explicit DoNotDisturbWindow(QPair<QTime, QTime>& timePoints, QWidget *parent = nullptr);
     ~DoNotDisturbWindow();
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
+    void setDoNotDisturbTimePoints();
+    QPair<QTime, QTime>& toSet;
     Ui::DoNotDisturbWindow *ui;
-    //QList<Timer*>& timers;
 };
 
 #endif // DONOTDISTURBWINDOW_H

@@ -36,3 +36,21 @@ void Timer::updateDuration(){ //timerEvent
 bool Timer::isTimeExpired() const {
     return duration < 1;
 }
+
+QTime Timer::getDurationInQTime() const{
+    int hours = duration / 3600;
+    int mins  = duration / 60 - hours * 60;
+    int secs  = duration - hours * 3600 - mins * 60;
+    return QTime(hours,mins,secs);
+}
+
+QString Timer::getInfoAboutTimer() const {
+    QString result;
+    result += timerType == TimerType::Timer ? "T" : "A";
+    result += "   ";
+    result += getDurationInQTime().toString("hh:mm:ss");
+    result += "   ";
+    result += name;
+    result += "   ";
+    return result;
+}

@@ -71,7 +71,7 @@ public:
         disturbModeEnd->setDisplayFormat(QCoreApplication::translate("DoNotDisturbWindow", "H:mm:ss", nullptr));
         label_2->setText(QCoreApplication::translate("DoNotDisturbWindow", "<html><head/><body><p><span style=\" font-size:16pt;\">Start</span></p></body></html>", nullptr));
         label_3->setText(QCoreApplication::translate("DoNotDisturbWindow", "<html><head/><body><p><span style=\" font-size:16pt;\">End</span></p></body></html>", nullptr));
-        pushButton->setText(QCoreApplication::translate("DoNotDisturbWindow", "Close", nullptr));
+        pushButton->setText(QCoreApplication::translate("DoNotDisturbWindow", "Set", nullptr));
     } // retranslateUi
 
 };

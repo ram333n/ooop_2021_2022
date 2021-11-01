@@ -119,7 +119,7 @@
     <string notr="true">font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
    </property>
    <property name="text">
-    <string>Close</string>
+    <string>Set</string>
    </property>
   </widget>
  </widget>

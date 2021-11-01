@@ -9,12 +9,15 @@ enum class TimerType{
 
 class Timer{
 public:
+    Timer() = default;
     Timer(TimerType newTimerType, const QTime& finish,const QString& newName);
     void changeStatus();
     long getDuration() const;
     TimerType getTimerType() const;
     bool isPaused() const;
     bool isTimeExpired() const;
+    QTime getDurationInQTime() const;
+    QString getInfoAboutTimer() const;
 private:
     void updateDuration();
     long duration;

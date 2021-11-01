@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setWindowTitle("Smart timers");
 }
 
 MainWindow::~MainWindow()
@@ -18,14 +19,20 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionAddTimer_triggered()
 {
-    InputWindow* inputWindow = new InputWindow(this);
+    inputWindow = new InputWindow(timers, currentIndex, ui->listTimersWidget);
     inputWindow->show();
 }
 
 
 void MainWindow::on_actionDoNotDisturb_triggered()
 {
-    DoNotDisturbWindow* doNotDisturbWindow=new DoNotDisturbWindow(this);
+    doNotDisturbWindow = new DoNotDisturbWindow(doNotDisturbModeTimePoints, this);
     doNotDisturbWindow->show();
+}
+
+
+void MainWindow::on_actionQuit_triggered()
+{
+    QApplication::exit();
 }
 

@@ -144,10 +144,11 @@ compiler_moc_header_make_all: debug/moc_donotdisturbwindow.cpp debug/moc_inputwi
 compiler_moc_header_clean:
 	-$(DEL_FILE) debug\moc_donotdisturbwindow.cpp debug\moc_inputwindow.cpp debug\moc_mainwindow.cpp debug\moc_timersignal.cpp
 debug/moc_donotdisturbwindow.cpp: ../Lab_2/donotdisturbwindow.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/QDialog \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qdialog.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtGui/qtguiglobal.h \
+		../Lab_2/timer.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/QTime \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstring.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qchar.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qglobal.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qconfig-bootstrapped.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qconfig.h \
@@ -168,21 +169,11 @@ debug/moc_donotdisturbwindow.cpp: ../Lab_2/donotdisturbwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qglobalstatic.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qnumeric.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qversiontagging.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtGui/qtgui-config.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qwidget.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtGui/qwindowdefs.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobjectdefs.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qnamespace.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtmetamacros.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobjectdefs_impl.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtGui/qwindowdefs_win.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobject.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstring.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qchar.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringview.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qbytearray.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qrefcount.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qnamespace.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtmetamacros.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qarraydata.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qpair.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qarraydatapointer.h \
@@ -196,30 +187,55 @@ debug/moc_donotdisturbwindow.cpp: ../Lab_2/donotdisturbwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qutf8stringview.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringtokenizer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringbuilder.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qlist.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qshareddata.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qhashfunctions.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcalendar.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qlocale.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qvariant.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qlist.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qiterator.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qbytearraylist.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringlist.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qalgorithms.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringmatcher.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcoreevent.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qscopedpointer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmetatype.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcompare.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qvarlengtharray.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qscopeguard.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qdatastream.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qscopedpointer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qiodevicebase.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qiterable.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmetacontainer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcontainerinfo.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtaggedpointer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmath.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobjectdefs.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobjectdefs_impl.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmap.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qshareddata_impl.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qhash.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobject.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcoreevent.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobject_impl.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qproperty.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qshareddata.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qpropertyprivate.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qdebug.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtextstream.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringconverter.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qset.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcontiguouscache.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qsharedpointer.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qsharedpointer_impl.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/QDialog \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qdialog.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtGui/qtguiglobal.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtGui/qtgui-config.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qwidget.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtGui/qwindowdefs.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtGui/qwindowdefs_win.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmargins.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qpaintdevice.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qrect.h \
@@ -237,8 +253,6 @@ debug/moc_donotdisturbwindow.cpp: ../Lab_2/donotdisturbwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qregion.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qline.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qpixmap.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qsharedpointer.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qsharedpointer_impl.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qfont.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qfontmetrics.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qfontinfo.h \
@@ -250,15 +264,6 @@ debug/moc_donotdisturbwindow.cpp: ../Lab_2/donotdisturbwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qiodevice.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qpointer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qurl.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qvariant.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmap.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qshareddata_impl.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qhash.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qdebug.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtextstream.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringconverter.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qset.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcontiguouscache.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qeventpoint.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qvector2d.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qvectornd.h \
@@ -412,10 +417,11 @@ debug/moc_inputwindow.cpp: ../Lab_2/inputwindow.h \
 	C:\Qt\6.2.0\mingw81_64\bin\moc.exe $(DEFINES) --include "C:/Users/proko/source/ooop_2021_2022/Semester 1/Lab 2/build-Lab_2-Desktop_Qt_6_2_0_MinGW_64_bit-Debug/debug/moc_predefs.h" -IC:/Qt/6.2.0/mingw81_64/mkspecs/win32-g++ -I"C:/Users/proko/source/ooop_2021_2022/Semester 1/Lab 2/Lab_2" -IC:/Qt/6.2.0/mingw81_64/include -IC:/Qt/6.2.0/mingw81_64/include/QtWidgets -IC:/Qt/6.2.0/mingw81_64/include/QtGui -IC:/Qt/6.2.0/mingw81_64/include/QtCore -I. -IC:/Qt/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++ -IC:/Qt/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward -IC:/Qt/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include -IC:/Qt/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed -IC:/Qt/Tools/mingw810_64/x86_64-w64-mingw32/include ..\Lab_2\inputwindow.h -o debug\moc_inputwindow.cpp
 
 debug/moc_mainwindow.cpp: ../Lab_2/mainwindow.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/QMainWindow \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qmainwindow.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtGui/qtguiglobal.h \
+		../Lab_2/timer.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/QTime \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstring.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qchar.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qglobal.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qconfig-bootstrapped.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qconfig.h \
@@ -436,21 +442,11 @@ debug/moc_mainwindow.cpp: ../Lab_2/mainwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qglobalstatic.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qnumeric.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qversiontagging.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtGui/qtgui-config.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qwidget.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtGui/qwindowdefs.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobjectdefs.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qnamespace.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtmetamacros.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobjectdefs_impl.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtGui/qwindowdefs_win.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobject.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstring.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qchar.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringview.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qbytearray.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qrefcount.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qnamespace.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtmetamacros.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qarraydata.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qpair.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qarraydatapointer.h \
@@ -464,30 +460,56 @@ debug/moc_mainwindow.cpp: ../Lab_2/mainwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qutf8stringview.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringtokenizer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringbuilder.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qlist.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qshareddata.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qhashfunctions.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcalendar.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qlocale.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qvariant.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qlist.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qiterator.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qbytearraylist.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringlist.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qalgorithms.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringmatcher.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcoreevent.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qscopedpointer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmetatype.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcompare.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qvarlengtharray.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qscopeguard.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qdatastream.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qscopedpointer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qiodevicebase.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qiterable.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmetacontainer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcontainerinfo.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtaggedpointer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmath.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobjectdefs.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobjectdefs_impl.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmap.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qshareddata_impl.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qhash.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobject.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcoreevent.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobject_impl.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qproperty.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qshareddata.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qpropertyprivate.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qdebug.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtextstream.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringconverter.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qset.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcontiguouscache.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qsharedpointer.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qsharedpointer_impl.h \
+		../Lab_2/donotdisturbwindow.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/QDialog \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qdialog.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtGui/qtguiglobal.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtGui/qtgui-config.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qwidget.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtGui/qwindowdefs.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtGui/qwindowdefs_win.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmargins.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qpaintdevice.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qrect.h \
@@ -505,8 +527,6 @@ debug/moc_mainwindow.cpp: ../Lab_2/mainwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qregion.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qline.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qpixmap.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qsharedpointer.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qsharedpointer_impl.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qfont.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qfontmetrics.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qfontinfo.h \
@@ -518,15 +538,6 @@ debug/moc_mainwindow.cpp: ../Lab_2/mainwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qiodevice.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qpointer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qurl.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qvariant.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmap.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qshareddata_impl.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qhash.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qdebug.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtextstream.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringconverter.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qset.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcontiguouscache.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qeventpoint.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qvector2d.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qvectornd.h \
@@ -541,8 +552,13 @@ debug/moc_mainwindow.cpp: ../Lab_2/mainwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/QTransform \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qnativeinterface.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qloggingcategory.h \
+		../Lab_2/timersignal.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/QMainWindow \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qmainwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qtabwidget.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qicon.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/QHash \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/QPair \
 		debug/moc_predefs.h \
 		C:/Qt/6.2.0/mingw81_64/bin/moc.exe
 	C:\Qt\6.2.0\mingw81_64\bin\moc.exe $(DEFINES) --include "C:/Users/proko/source/ooop_2021_2022/Semester 1/Lab 2/build-Lab_2-Desktop_Qt_6_2_0_MinGW_64_bit-Debug/debug/moc_predefs.h" -IC:/Qt/6.2.0/mingw81_64/mkspecs/win32-g++ -I"C:/Users/proko/source/ooop_2021_2022/Semester 1/Lab 2/Lab_2" -IC:/Qt/6.2.0/mingw81_64/include -IC:/Qt/6.2.0/mingw81_64/include/QtWidgets -IC:/Qt/6.2.0/mingw81_64/include/QtGui -IC:/Qt/6.2.0/mingw81_64/include/QtCore -I. -IC:/Qt/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++ -IC:/Qt/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward -IC:/Qt/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include -IC:/Qt/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed -IC:/Qt/Tools/mingw810_64/x86_64-w64-mingw32/include ..\Lab_2\mainwindow.h -o debug\moc_mainwindow.cpp
@@ -717,10 +733,11 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 ####### Compile
 
 debug/donotdisturbwindow.o: ../Lab_2/donotdisturbwindow.cpp ../Lab_2/donotdisturbwindow.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/QDialog \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qdialog.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtGui/qtguiglobal.h \
+		../Lab_2/timer.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/QTime \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstring.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qchar.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qglobal.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qconfig-bootstrapped.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qconfig.h \
@@ -741,21 +758,11 @@ debug/donotdisturbwindow.o: ../Lab_2/donotdisturbwindow.cpp ../Lab_2/donotdistur
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qglobalstatic.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qnumeric.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qversiontagging.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtGui/qtgui-config.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qwidget.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtGui/qwindowdefs.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobjectdefs.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qnamespace.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtmetamacros.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobjectdefs_impl.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtGui/qwindowdefs_win.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobject.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstring.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qchar.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringview.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qbytearray.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qrefcount.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qnamespace.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtmetamacros.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qarraydata.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qpair.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qarraydatapointer.h \
@@ -769,30 +776,55 @@ debug/donotdisturbwindow.o: ../Lab_2/donotdisturbwindow.cpp ../Lab_2/donotdistur
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qutf8stringview.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringtokenizer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringbuilder.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qlist.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qshareddata.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qhashfunctions.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcalendar.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qlocale.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qvariant.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qlist.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qiterator.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qbytearraylist.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringlist.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qalgorithms.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringmatcher.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcoreevent.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qscopedpointer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmetatype.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcompare.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qvarlengtharray.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qscopeguard.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qdatastream.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qscopedpointer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qiodevicebase.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qiterable.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmetacontainer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcontainerinfo.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtaggedpointer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmath.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobjectdefs.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobjectdefs_impl.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmap.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qshareddata_impl.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qhash.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobject.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcoreevent.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobject_impl.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qproperty.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qshareddata.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qpropertyprivate.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qdebug.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtextstream.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringconverter.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qset.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcontiguouscache.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qsharedpointer.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qsharedpointer_impl.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/QDialog \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qdialog.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtGui/qtguiglobal.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtGui/qtgui-config.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qwidget.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtGui/qwindowdefs.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtGui/qwindowdefs_win.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmargins.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qpaintdevice.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qrect.h \
@@ -810,8 +842,6 @@ debug/donotdisturbwindow.o: ../Lab_2/donotdisturbwindow.cpp ../Lab_2/donotdistur
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qregion.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qline.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qpixmap.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qsharedpointer.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qsharedpointer_impl.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qfont.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qfontmetrics.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qfontinfo.h \
@@ -823,15 +853,6 @@ debug/donotdisturbwindow.o: ../Lab_2/donotdisturbwindow.cpp ../Lab_2/donotdistur
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qiodevice.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qpointer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qurl.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qvariant.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmap.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qshareddata_impl.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qhash.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qdebug.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtextstream.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringconverter.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qset.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcontiguouscache.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qeventpoint.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qvector2d.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qvectornd.h \
@@ -867,7 +888,6 @@ debug/donotdisturbwindow.o: ../Lab_2/donotdisturbwindow.cpp ../Lab_2/donotdistur
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcoreapplication_platform.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qguiapplication.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qinputmethod.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qlocale.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qguiapplication_platform.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/QLabel \
 		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qlabel.h \
@@ -880,8 +900,6 @@ debug/donotdisturbwindow.o: ../Lab_2/donotdisturbwindow.cpp ../Lab_2/donotdistur
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qicon.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/QTimeEdit \
 		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qdatetimeedit.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qdatetime.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcalendar.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qabstractspinbox.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qvalidator.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qregularexpression.h
@@ -1073,10 +1091,11 @@ debug/inputwindow.o: ../Lab_2/inputwindow.cpp ../Lab_2/inputwindow.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\inputwindow.o ..\Lab_2\inputwindow.cpp
 
 debug/main.o: ../Lab_2/main.cpp ../Lab_2/mainwindow.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/QMainWindow \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qmainwindow.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtGui/qtguiglobal.h \
+		../Lab_2/timer.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/QTime \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstring.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qchar.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qglobal.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qconfig-bootstrapped.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qconfig.h \
@@ -1097,21 +1116,11 @@ debug/main.o: ../Lab_2/main.cpp ../Lab_2/mainwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qglobalstatic.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qnumeric.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qversiontagging.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtGui/qtgui-config.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qwidget.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtGui/qwindowdefs.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobjectdefs.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qnamespace.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtmetamacros.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobjectdefs_impl.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtGui/qwindowdefs_win.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobject.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstring.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qchar.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringview.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qbytearray.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qrefcount.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qnamespace.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtmetamacros.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qarraydata.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qpair.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qarraydatapointer.h \
@@ -1125,30 +1134,56 @@ debug/main.o: ../Lab_2/main.cpp ../Lab_2/mainwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qutf8stringview.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringtokenizer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringbuilder.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qlist.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qshareddata.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qhashfunctions.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcalendar.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qlocale.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qvariant.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qlist.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qiterator.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qbytearraylist.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringlist.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qalgorithms.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringmatcher.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcoreevent.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qscopedpointer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmetatype.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcompare.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qvarlengtharray.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qscopeguard.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qdatastream.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qscopedpointer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qiodevicebase.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qiterable.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmetacontainer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcontainerinfo.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtaggedpointer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmath.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobjectdefs.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobjectdefs_impl.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmap.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qshareddata_impl.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qhash.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobject.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcoreevent.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobject_impl.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qproperty.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qshareddata.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qpropertyprivate.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qdebug.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtextstream.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringconverter.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qset.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcontiguouscache.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qsharedpointer.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qsharedpointer_impl.h \
+		../Lab_2/donotdisturbwindow.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/QDialog \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qdialog.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtGui/qtguiglobal.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtGui/qtgui-config.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qwidget.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtGui/qwindowdefs.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtGui/qwindowdefs_win.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmargins.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qpaintdevice.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qrect.h \
@@ -1166,8 +1201,6 @@ debug/main.o: ../Lab_2/main.cpp ../Lab_2/mainwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qregion.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qline.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qpixmap.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qsharedpointer.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qsharedpointer_impl.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qfont.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qfontmetrics.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qfontinfo.h \
@@ -1179,15 +1212,6 @@ debug/main.o: ../Lab_2/main.cpp ../Lab_2/mainwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qiodevice.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qpointer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qurl.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qvariant.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmap.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qshareddata_impl.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qhash.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qdebug.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtextstream.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringconverter.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qset.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcontiguouscache.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qeventpoint.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qvector2d.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qvectornd.h \
@@ -1202,13 +1226,13 @@ debug/main.o: ../Lab_2/main.cpp ../Lab_2/mainwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/QTransform \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qnativeinterface.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qloggingcategory.h \
+		../Lab_2/timersignal.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/QMainWindow \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qmainwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qtabwidget.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qicon.h \
-		../Lab_2/timer.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/QTime \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qdatetime.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcalendar.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qlocale.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/QHash \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/QPair \
 		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/QApplication \
 		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qapplication.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcoreapplication.h \
@@ -1232,10 +1256,11 @@ debug/main.o: ../Lab_2/main.cpp ../Lab_2/mainwindow.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o ..\Lab_2\main.cpp
 
 debug/mainwindow.o: ../Lab_2/mainwindow.cpp ../Lab_2/mainwindow.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/QMainWindow \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qmainwindow.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtGui/qtguiglobal.h \
+		../Lab_2/timer.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/QTime \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstring.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qchar.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qglobal.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qconfig-bootstrapped.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qconfig.h \
@@ -1256,21 +1281,11 @@ debug/mainwindow.o: ../Lab_2/mainwindow.cpp ../Lab_2/mainwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qglobalstatic.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qnumeric.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qversiontagging.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtGui/qtgui-config.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qwidget.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtGui/qwindowdefs.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobjectdefs.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qnamespace.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtmetamacros.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobjectdefs_impl.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtGui/qwindowdefs_win.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobject.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstring.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qchar.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringview.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qbytearray.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qrefcount.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qnamespace.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtmetamacros.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qarraydata.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qpair.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qarraydatapointer.h \
@@ -1284,30 +1299,56 @@ debug/mainwindow.o: ../Lab_2/mainwindow.cpp ../Lab_2/mainwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qutf8stringview.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringtokenizer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringbuilder.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qlist.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qshareddata.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qhashfunctions.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcalendar.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qlocale.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qvariant.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qlist.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qiterator.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qbytearraylist.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringlist.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qalgorithms.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringmatcher.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcoreevent.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qscopedpointer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmetatype.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcompare.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qvarlengtharray.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qscopeguard.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qdatastream.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qscopedpointer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qiodevicebase.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qiterable.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmetacontainer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcontainerinfo.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtaggedpointer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmath.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobjectdefs.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobjectdefs_impl.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmap.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qshareddata_impl.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qhash.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobject.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcoreevent.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qobject_impl.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qproperty.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qshareddata.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qpropertyprivate.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qdebug.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtextstream.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringconverter.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qset.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcontiguouscache.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qsharedpointer.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/qsharedpointer_impl.h \
+		../Lab_2/donotdisturbwindow.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/QDialog \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qdialog.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtGui/qtguiglobal.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtGui/qtgui-config.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qwidget.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtGui/qwindowdefs.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtGui/qwindowdefs_win.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmargins.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qpaintdevice.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qrect.h \
@@ -1325,8 +1366,6 @@ debug/mainwindow.o: ../Lab_2/mainwindow.cpp ../Lab_2/mainwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qregion.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qline.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qpixmap.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qsharedpointer.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qsharedpointer_impl.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qfont.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qfontmetrics.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qfontinfo.h \
@@ -1338,15 +1377,6 @@ debug/mainwindow.o: ../Lab_2/mainwindow.cpp ../Lab_2/mainwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qiodevice.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qpointer.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qurl.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qvariant.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qmap.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qshareddata_impl.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qhash.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qdebug.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qtextstream.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qstringconverter.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qset.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcontiguouscache.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qeventpoint.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qvector2d.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qvectornd.h \
@@ -1361,12 +1391,14 @@ debug/mainwindow.o: ../Lab_2/mainwindow.cpp ../Lab_2/mainwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/QTransform \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qnativeinterface.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qloggingcategory.h \
+		../Lab_2/timersignal.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/QMainWindow \
+		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qmainwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qtabwidget.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qicon.h \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/QHash \
+		C:/Qt/6.2.0/mingw81_64/include/QtCore/QPair \
 		../Lab_2/inputwindow.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/QDialog \
-		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qdialog.h \
-		../Lab_2/donotdisturbwindow.h \
 		ui_mainwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/QVariant \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/QAction \
@@ -1390,7 +1422,6 @@ debug/mainwindow.o: ../Lab_2/mainwindow.cpp ../Lab_2/mainwindow.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtCore/qcoreapplication_platform.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qguiapplication.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qinputmethod.h \
-		C:/Qt/6.2.0/mingw81_64/include/QtCore/qlocale.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtGui/qguiapplication_platform.h \
 		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/QListWidget \
 		C:/Qt/6.2.0/mingw81_64/include/QtWidgets/qlistwidget.h \

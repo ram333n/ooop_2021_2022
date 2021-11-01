@@ -21,7 +21,7 @@ class Ui_TimerSignal
 {
 public:
     QLabel *timerSignalMessage;
-    QPushButton *pushButtonOk;
+    QPushButton *pushButton;
 
     void setupUi(QDialog *TimerSignal)
     {
@@ -33,10 +33,11 @@ public:
         timerSignalMessage = new QLabel(TimerSignal);
         timerSignalMessage->setObjectName(QString::fromUtf8("timerSignalMessage"));
         timerSignalMessage->setGeometry(QRect(10, 0, 481, 191));
-        pushButtonOk = new QPushButton(TimerSignal);
-        pushButtonOk->setObjectName(QString::fromUtf8("pushButtonOk"));
-        pushButtonOk->setGeometry(QRect(150, 200, 201, 61));
-        pushButtonOk->setStyleSheet(QString::fromUtf8("font: 14pt \"MS Shell Dlg 2\";"));
+        timerSignalMessage->setAlignment(Qt::AlignCenter);
+        pushButton = new QPushButton(TimerSignal);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButton->setGeometry(QRect(150, 200, 201, 61));
+        pushButton->setStyleSheet(QString::fromUtf8("font: 14pt \"MS Shell Dlg 2\";"));
 
         retranslateUi(TimerSignal);
 
@@ -47,7 +48,7 @@ public:
     {
         TimerSignal->setWindowTitle(QCoreApplication::translate("TimerSignal", "Dialog", nullptr));
         timerSignalMessage->setText(QCoreApplication::translate("TimerSignal", "<html><head/><body><p align=\"center\"><span style=\" font-size:24pt;\">Time has been </span></p><p align=\"center\"><span style=\" font-size:24pt;\">expired</span></p></body></html>", nullptr));
-        pushButtonOk->setText(QCoreApplication::translate("TimerSignal", "Ok", nullptr));
+        pushButton->setText(QCoreApplication::translate("TimerSignal", "Ok", nullptr));
     } // retranslateUi
 
 };

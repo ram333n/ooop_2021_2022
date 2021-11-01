@@ -29,9 +29,9 @@ public:
     QLabel *label_3;
     QTimeEdit *inputTimer;
     QLabel *label_4;
-    QLineEdit *lineEdit;
+    QLineEdit *lineNameTimerEdit;
     QPushButton *addButton;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QGridLayout *gridLayout;
     QRadioButton *radioButtonAlarmClock;
     QRadioButton *radioButtonTimer;
@@ -57,27 +57,27 @@ public:
         label_4 = new QLabel(InputWindow);
         label_4->setObjectName(QString::fromUtf8("label_4"));
         label_4->setGeometry(QRect(40, 280, 131, 61));
-        lineEdit = new QLineEdit(InputWindow);
-        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
-        lineEdit->setGeometry(QRect(210, 290, 311, 41));
-        lineEdit->setStyleSheet(QString::fromUtf8("font: 14pt \"MS Shell Dlg 2\";"));
+        lineNameTimerEdit = new QLineEdit(InputWindow);
+        lineNameTimerEdit->setObjectName(QString::fromUtf8("lineNameTimerEdit"));
+        lineNameTimerEdit->setGeometry(QRect(210, 290, 311, 41));
+        lineNameTimerEdit->setStyleSheet(QString::fromUtf8("font: 14pt \"MS Shell Dlg 2\";"));
         addButton = new QPushButton(InputWindow);
         addButton->setObjectName(QString::fromUtf8("addButton"));
         addButton->setGeometry(QRect(250, 400, 201, 41));
         addButton->setStyleSheet(QString::fromUtf8("font: 8pt \"MS Shell Dlg 2\";\n"
 "font: 12pt \"MS Shell Dlg 2\";"));
-        widget = new QWidget(InputWindow);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(210, 70, 311, 51));
-        gridLayout = new QGridLayout(widget);
+        layoutWidget = new QWidget(InputWindow);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(210, 70, 311, 51));
+        gridLayout = new QGridLayout(layoutWidget);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
-        radioButtonAlarmClock = new QRadioButton(widget);
+        radioButtonAlarmClock = new QRadioButton(layoutWidget);
         radioButtonAlarmClock->setObjectName(QString::fromUtf8("radioButtonAlarmClock"));
 
         gridLayout->addWidget(radioButtonAlarmClock, 1, 1, 1, 1);
 
-        radioButtonTimer = new QRadioButton(widget);
+        radioButtonTimer = new QRadioButton(layoutWidget);
         radioButtonTimer->setObjectName(QString::fromUtf8("radioButtonTimer"));
 
         gridLayout->addWidget(radioButtonTimer, 0, 1, 1, 1);
@@ -95,7 +95,7 @@ public:
         label_3->setText(QCoreApplication::translate("InputWindow", "<html><head/><body><p><span style=\" font-size:14pt;\">2)Select time</span></p></body></html>", nullptr));
         inputTimer->setDisplayFormat(QCoreApplication::translate("InputWindow", "H:mm:ss", nullptr));
         label_4->setText(QCoreApplication::translate("InputWindow", "<html><head/><body><p><span style=\" font-size:14pt;\">3)Type name</span></p><p><span style=\" font-size:14pt;\">of timer</span></p></body></html>", nullptr));
-        lineEdit->setText(QCoreApplication::translate("InputWindow", "Timer name", nullptr));
+        lineNameTimerEdit->setText(QString());
         addButton->setText(QCoreApplication::translate("InputWindow", "Add", nullptr));
         radioButtonAlarmClock->setText(QCoreApplication::translate("InputWindow", "Alarm clock", nullptr));
         radioButtonTimer->setText(QCoreApplication::translate("InputWindow", "Timer", nullptr));

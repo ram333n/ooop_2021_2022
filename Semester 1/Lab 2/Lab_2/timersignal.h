@@ -2,6 +2,7 @@
 #define TIMERSIGNAL_H
 
 #include <QDialog>
+//#include <QSo
 
 namespace Ui {
 class TimerSignal;
@@ -12,7 +13,7 @@ class TimerSignal : public QDialog
     Q_OBJECT
 
 public:
-    explicit TimerSignal(QWidget *parent = nullptr);
+    explicit TimerSignal(const QString& timerName,QWidget *parent = nullptr);
     ~TimerSignal();
 
 private slots:

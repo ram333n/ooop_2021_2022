@@ -1,8 +1,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include "timer.h"
+#include "donotdisturbwindow.h"
+#include "timersignal.h"
+#include "inputwindow.h"
+
 #include <QMainWindow>
-#include <QList>
+#include <QHash>
+#include <QPair>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -21,8 +26,18 @@ private slots:
 
     void on_actionDoNotDisturb_triggered();
 
+    void on_actionQuit_triggered();
+
 private:
     Ui::MainWindow *ui;
-    QList<Timer> timers;
+    QHash<int ,Timer> timers;
+    QPair<QTime, QTime> doNotDisturbModeTimePoints = {QTime(0,0,0), QTime(0,0,0)};
+    int activeTimersCount = 0;
+    int currentIndex = 0;
+
+    QTimer* oneSecondTimer;
+    InputWindow* inputWindow;
+    DoNotDisturbWindow* doNotDisturbWindow;
+
 };
 #endif // MAINWINDOW_H

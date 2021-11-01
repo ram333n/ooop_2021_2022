@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
@@ -34,7 +35,8 @@ public:
     QAction *actionEnableTimer;
     QAction *actionEnableAllTimers;
     QWidget *centralwidget;
-    QListWidget *listWidget;
+    QListWidget *listTimersWidget;
+    QLabel *label;
     QMenuBar *menubar;
     QMenu *menuFile;
     QStatusBar *statusbar;
@@ -85,10 +87,16 @@ public:
         actionEnableAllTimers->setObjectName(QString::fromUtf8("actionEnableAllTimers"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
-        listWidget = new QListWidget(centralwidget);
-        listWidget->setObjectName(QString::fromUtf8("listWidget"));
-        listWidget->setGeometry(QRect(40, 20, 571, 321));
-        listWidget->setStyleSheet(QString::fromUtf8("font: 14pt \"MS Shell Dlg 2\";"));
+        listTimersWidget = new QListWidget(centralwidget);
+        listTimersWidget->setObjectName(QString::fromUtf8("listTimersWidget"));
+        listTimersWidget->setGeometry(QRect(40, 20, 571, 321));
+        listTimersWidget->setStyleSheet(QString::fromUtf8("font: 14pt \"MS Shell Dlg 2\";"));
+        listTimersWidget->setResizeMode(QListView::Fixed);
+        listTimersWidget->setBatchSize(200);
+        listTimersWidget->setWordWrap(true);
+        label = new QLabel(centralwidget);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setGeometry(QRect(40, 0, 281, 20));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -148,6 +156,7 @@ public:
 #if QT_CONFIG(tooltip)
         actionEnableAllTimers->setToolTip(QCoreApplication::translate("MainWindow", "Enable all timers", nullptr));
 #endif // QT_CONFIG(tooltip)
+        label->setText(QCoreApplication::translate("MainWindow", "  Id     Type         Time              Name", nullptr));
         menuFile->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
         toolBar->setWindowTitle(QCoreApplication::translate("MainWindow", "toolBar", nullptr));
     } // retranslateUi
