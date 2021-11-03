@@ -52,7 +52,8 @@ void InputWindow::on_addButton_clicked()
         listWidget->addItem(QString::number(id) + "   " + newTimer.getInfoAboutTimer());
         timersRef[id] = newTimer;
         id++;
-        qDebug() << timersRef[id].getInfoAboutTimer();
+        qDebug() << timersRef[id].getInfoAboutTimer()<<"Size : "<<timersRef.count();
+
         close();
     }
 }

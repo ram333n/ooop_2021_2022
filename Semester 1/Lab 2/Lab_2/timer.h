@@ -18,8 +18,9 @@ public:
     bool isTimeExpired() const;
     QTime getDurationInQTime() const;
     QString getInfoAboutTimer() const;
-private:
+    QString getName() const;
     void updateDuration();
+private:
     long duration;
     TimerType timerType;
     QString name;

@@ -44,12 +44,18 @@ QTime Timer::getDurationInQTime() const{
     return QTime(hours,mins,secs);
 }
 
+QString Timer::getName() const {
+    return name;
+}
+
 QString Timer::getInfoAboutTimer() const {
     QString result;
     result += timerType == TimerType::Timer ? "T" : "A";
     result += "   ";
     result += getDurationInQTime().toString("hh:mm:ss");
     result += "   ";
+    result += isPaused() ? "P" : "A";
+    result += "    ";
     result += name;
     result += "   ";
     return result;

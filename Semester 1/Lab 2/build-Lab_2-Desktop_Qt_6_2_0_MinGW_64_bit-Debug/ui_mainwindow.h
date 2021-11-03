@@ -156,7 +156,7 @@ public:
 #if QT_CONFIG(tooltip)
         actionEnableAllTimers->setToolTip(QCoreApplication::translate("MainWindow", "Enable all timers", nullptr));
 #endif // QT_CONFIG(tooltip)
-        label->setText(QCoreApplication::translate("MainWindow", "  Id     Type         Time              Name", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "  Id   Type           Time          Status    Name", nullptr));
         menuFile->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
         toolBar->setWindowTitle(QCoreApplication::translate("MainWindow", "toolBar", nullptr));
     } // retranslateUi

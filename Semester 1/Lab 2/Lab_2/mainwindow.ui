@@ -64,7 +64,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>  Id     Type         Time              Name</string>
+     <string>  Id   Type           Time          Status    Name</string>
     </property>
    </widget>
   </widget>
