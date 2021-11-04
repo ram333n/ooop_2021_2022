@@ -2,7 +2,7 @@
 #define TIMERSIGNAL_H
 
 #include <QDialog>
-//#include <QSo
+//#include <Q
 
 namespace Ui {
 class TimerSignal;

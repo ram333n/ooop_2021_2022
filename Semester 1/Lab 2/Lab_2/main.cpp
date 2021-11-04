@@ -3,13 +3,17 @@
 
 #include <QApplication>
 #include <QDebug>
+#include <QException>
 
 int main(int argc, char *argv[])
 {
-    Timer t(TimerType::Timer, QTime(0,0,34), "aboba");
-    qDebug() << t.getInfoAboutTimer();
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    return a.exec();
+    try{
+        QApplication a(argc, argv);
+        MainWindow w;
+        w.show();
+        return a.exec();
+    } catch(QException& ex){
+        qDebug()<<ex.what();
+    }
+    return 435543;
 }

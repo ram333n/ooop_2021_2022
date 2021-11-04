@@ -11,8 +11,14 @@ Timer::Timer(TimerType newTimerType, const QTime& finish, const QString& newName
     isPaused_ = false;
 }
 
-void Timer::changeStatus(){
-    isPaused_ = !isPaused_;
+void Timer::enableTimer(){
+    isPaused_ = false;
+}
+
+void Timer::pauseTimer(){
+    if(timerType==TimerType::Timer){
+        isPaused_ = true;
+    }
 }
 
 long Timer::getDuration() const {

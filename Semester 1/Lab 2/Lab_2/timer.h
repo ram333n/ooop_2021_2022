@@ -11,7 +11,9 @@ class Timer{
 public:
     Timer() = default;
     Timer(TimerType newTimerType, const QTime& finish,const QString& newName);
-    void changeStatus();
+    //void changeStatus();
+    void enableTimer();
+    void pauseTimer();
     long getDuration() const;
     TimerType getTimerType() const;
     bool isPaused() const;

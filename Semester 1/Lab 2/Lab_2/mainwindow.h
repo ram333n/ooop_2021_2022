@@ -8,6 +8,9 @@
 #include <QMainWindow>
 #include <QHash>
 #include <QPair>
+#include <QQueue>
+
+#include <shared_mutex>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -41,30 +44,33 @@ private slots:
 
     void on_actionEnableAllTimers_triggered();
 
-
+    void on_listTimersWidget_itemClicked(QListWidgetItem *item);
 
 private:
     void updateAllTimers();
-    bool updateSingleTimer(int posToInsert);
+    bool updateSingleTimer(QListWidgetItem* toUpdate, int posToInsert);
     void updateStatusBar(const QTime& closestTimer);
-    //void removeTimer(int idx);
     void removeTimer(QListWidgetItem* toRemove);
     void pauseTimer(QListWidgetItem* toPause);
     void enableTimer(QListWidgetItem* toEnable);
     int getIdOfListWidgetItem(QListWidgetItem* item) const;
     void updateDoNotDisturbMode();
-    bool isDoNotDisturbModeNow() const ;
+    bool isDoNotDisturbModeNow() const;
 
     Ui::MainWindow *ui;
     QHash<int ,Timer> timers;
-    //QHash<int, TimerSignal*> timerSignals;
+    QQueue<int> idGarbage;
     QPair<QTime, QTime> doNotDisturbModeTimePoints = {QTime(0,0,0), QTime(0,0,0)};
+
     int activeTimersCount = 0;
     int currentIndex = 0;
+    int currentRow = -1;
 
     QTimer* oneSecondTimer;
     InputWindow* inputWindow;
     DoNotDisturbWindow* doNotDisturbWindow;
+
+    std::shared_mutex mutex;
 
 };
 #endif // MAINWINDOW_H

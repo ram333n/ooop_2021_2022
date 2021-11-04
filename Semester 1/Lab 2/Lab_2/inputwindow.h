@@ -5,6 +5,7 @@
 #include <QDialog>
 #include <QListWidget>
 #include <QMessageBox>
+#include <QQueue>
 
 namespace Ui {
 class InputWindow;
@@ -16,7 +17,8 @@ class InputWindow : public QDialog
 
 public:
     explicit InputWindow(QHash<int, Timer>& newTimersRef,
-                         int& newId,
+                         QQueue<int>& newIdGarbageRef,
+                         int& newCurrentIdRef,
                          QListWidget* newListWidget,
                          QWidget *parent = nullptr);
     ~InputWindow();
@@ -30,7 +32,8 @@ private:
     Ui::InputWindow *ui;
     QHash<int, Timer>& timersRef;
     QListWidget*  listWidget;
-    int& id;
+    QQueue<int>& idGarbageRef;
+    int& currentIdRef;
 };
 
 #endif // INPUTWINDOW_H

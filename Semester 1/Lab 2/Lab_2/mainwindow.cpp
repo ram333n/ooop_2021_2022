@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     setWindowTitle("Smart timers");
-
+    //ui->listTimersWidget->setEditTriggers( QAbstractItemView::DoubleClicked );
     startTimer(1000);
 }
 
@@ -27,7 +27,7 @@ void MainWindow::timerEvent(QTimerEvent *e){
 
 void MainWindow::on_actionAddTimer_triggered()
 {
-    inputWindow = new InputWindow(timers, currentIndex, ui->listTimersWidget, this);
+    inputWindow = new InputWindow(timers, idGarbage, currentIndex, ui->listTimersWidget, this);
     inputWindow->setAttribute(Qt::WA_DeleteOnClose);
     inputWindow->show();
 }
@@ -49,39 +49,41 @@ void MainWindow::on_actionQuit_triggered()
 
 void MainWindow::updateAllTimers(){
     QTime closestTime = QTime(23,59,59);
-    QListWidgetItem* listItem;
     activeTimersCount = 0;
+    std::lock_guard g(mutex); //mb useless
     for(int i = 0, rowsCount = ui->listTimersWidget->count(); i < rowsCount;){
-        listItem = ui->listTimersWidget->takeItem(i);
-        if(updateSingleTimer(i)){
+        QListWidgetItem* listItem = ui->listTimersWidget->takeItem(i);
+        if(updateSingleTimer(listItem, i)){
             rowsCount--;
         } else {
-            closestTime = std::min(closestTime, timers[getIdOfListWidgetItem(listItem)].getDurationInQTime());
-            i++;
             if(!timers[getIdOfListWidgetItem(listItem)].isPaused()){
+                closestTime = std::min(closestTime, timers[getIdOfListWidgetItem(listItem)].getDurationInQTime());
                 activeTimersCount++;
             }
+            i++;
         }
     }
     updateStatusBar(closestTime);
 }
 
-bool MainWindow::updateSingleTimer(int idxToUpdate){
-    QListWidgetItem* toUpdate = ui->listTimersWidget->item(idxToUpdate);
+bool MainWindow::updateSingleTimer(QListWidgetItem* toUpdate, int rowToUpdate){
     int idx = getIdOfListWidgetItem(toUpdate);
     if(!timers[idx].isTimeExpired()){
         if(!timers[idx].isPaused()){
-            timers[idx].updateDuration();
+            timers[idx].updateDuration();            
         }
         QString timerInfo;
         timerInfo = QString::number(idx) + "   " + timers[idx].getInfoAboutTimer();
-        qDebug()<<"TIMER INFO :" <<toUpdate->text();
-        toUpdate->setData(Qt::DisplayRole, QVariant(timerInfo));
         toUpdate->setText(timerInfo);
+        ui->listTimersWidget->insertItem(rowToUpdate, toUpdate);
+        if(currentRow > -1){
+            ui->listTimersWidget->item(currentRow)->setSelected(true);
+        }
     } else {
         if(!isDoNotDisturbModeNow()){
-            TimerSignal* message = new TimerSignal(timers[idx].getName(), this);
+            TimerSignal* message = new TimerSignal(timers[idx].getName());
             message->setAttribute(Qt::WA_DeleteOnClose);
+            message->show();
         }
         removeTimer(toUpdate);
         return true;
@@ -93,7 +95,7 @@ void MainWindow::updateStatusBar(const QTime& closestTimer){
     QString newStatusBarInfo;
     newStatusBarInfo +=activeTimersCount != 0 ? "Active timers : " + QString::number(activeTimersCount) : "No active timers";
     newStatusBarInfo +=", ";
-    newStatusBarInfo +="Time to closest timer : " + (closestTimer != QTime(23,59,59) ? closestTimer.toString("hh:mm:ss") : "-");
+    newStatusBarInfo +="Time to closest timer signal: " + (closestTimer != QTime(23,59,59) ? closestTimer.toString("hh:mm:ss") : "-");
     ui->statusbar->showMessage(newStatusBarInfo);
 }
 
@@ -102,14 +104,15 @@ void MainWindow::removeTimer(QListWidgetItem* toRemove){
     if(!toRemove){
         return;
     }
-
+    //std::shared_guard g(mutex);
     int idx = getIdOfListWidgetItem(toRemove);
     ui->listTimersWidget->removeItemWidget(toRemove);
     if(!timers[idx].isPaused()){
         --activeTimersCount;
     }
     timers.remove(idx);
-    //delete toRemove; //can bring some problems;
+    idGarbage.push_back(idx);
+    delete toRemove;
 }
 
 void MainWindow::pauseTimer(QListWidgetItem* toPause){
@@ -118,9 +121,7 @@ void MainWindow::pauseTimer(QListWidgetItem* toPause){
     }
 
     int idx = getIdOfListWidgetItem(toPause);
-    if(!timers[idx].isPaused()){
-        timers[idx].changeStatus();
-    }
+    timers[idx].pauseTimer();
 }
 
 void MainWindow::enableTimer(QListWidgetItem* toEnable){
@@ -129,9 +130,7 @@ void MainWindow::enableTimer(QListWidgetItem* toEnable){
     }
 
     int idx = getIdOfListWidgetItem(toEnable);
-    if(timers[idx].isPaused()){
-        timers[idx].changeStatus();
-    }
+    timers[idx].enableTimer();
 }
 
 int MainWindow::getIdOfListWidgetItem(QListWidgetItem* item) const {
@@ -156,25 +155,22 @@ void MainWindow::updateDoNotDisturbMode(){
 
 bool MainWindow::isDoNotDisturbModeNow() const {
     return doNotDisturbModeTimePoints.first <= QTime::currentTime() &&
-           QTime::currentTime() >= doNotDisturbModeTimePoints.second;
+           QTime::currentTime() <= doNotDisturbModeTimePoints.second;
 }
 
 void MainWindow::on_actionRemoveTimer_triggered()
 {
-    QListWidgetItem* toRemove = ui->listTimersWidget->currentItem();
+    QListWidgetItem* toRemove = ui->listTimersWidget->item(currentRow);
     if(!toRemove){
         QMessageBox::warning(this, "Warning", "Timer isn't selected");
     } else {
-        auto reply = QMessageBox::question(this, "Question", "Do you want to remove selected item?");
-        if(reply == QMessageBox::Yes){
-            removeTimer(toRemove);
-        }
+        removeTimer(toRemove);
     }
 }
 
 void MainWindow::on_actionPauseTimer_triggered()
 {
-    QListWidgetItem* toPause = ui->listTimersWidget->currentItem();
+    QListWidgetItem* toPause = ui->listTimersWidget->item(currentRow);
     if(!toPause){
         QMessageBox::warning(this, "Warning", "Timer isn't selected");
     } else {
@@ -185,7 +181,7 @@ void MainWindow::on_actionPauseTimer_triggered()
 
 void MainWindow::on_actionEnableTimer_triggered()
 {
-    QListWidgetItem* toEnable = ui->listTimersWidget->currentItem();
+    QListWidgetItem* toEnable = ui->listTimersWidget->item(currentRow);
     if(!toEnable){
         QMessageBox::warning(this, "Warning", "Timer isn't selected");
     } else {
@@ -193,19 +189,29 @@ void MainWindow::on_actionEnableTimer_triggered()
     }
 }
 
-
 void MainWindow::on_actionPauseAllTimers_triggered()
 {
-    for(int i = 0; i < ui->listTimersWidget->count(); ++i){
-        pauseTimer(ui->listTimersWidget->takeItem(i));
+    for(auto& timer : timers){
+        timer.pauseTimer();
     }
 }
 
 
 void MainWindow::on_actionEnableAllTimers_triggered()
 {
-    for(int i = 0; i < ui->listTimersWidget->count(); ++i){
-        enableTimer(ui->listTimersWidget->takeItem(i));
+    for(auto& timer : timers){
+        timer.enableTimer();
     }
+}
+
+
+void MainWindow::on_listTimersWidget_itemClicked(QListWidgetItem *item)
+{
+    if(item){
+        currentRow = ui->listTimersWidget->row(item);
+    } else {
+        currentRow = -1;
+    }
+    qDebug()<<"CURRENT ROW"<<currentRow;
 }
 

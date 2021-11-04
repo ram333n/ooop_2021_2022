@@ -2,14 +2,16 @@
 #include "ui_inputwindow.h"
 
 InputWindow::InputWindow(QHash<int, Timer>& newTimersRef,
-                         int& newId,
+                         QQueue<int>& newIdGarbageRef,
+                         int& newCurrentIdRef,
                          QListWidget* newListWidget,
                          QWidget *parent) :
     QDialog(parent),
     ui(new Ui::InputWindow),
     timersRef(newTimersRef),
     listWidget(newListWidget),
-    id(newId)
+    idGarbageRef(newIdGarbageRef),
+    currentIdRef(newCurrentIdRef)
 {
     ui->setupUi(this);
     setWindowTitle("Input timer");
@@ -47,11 +49,18 @@ void InputWindow::on_addButton_clicked()
         QMessageBox::warning(this, "Warning", errorMessage);
         errorMessage.clear();
     } else {
+        int id = -1;;
+        if(idGarbageRef.isEmpty()){
+            id = currentIdRef;
+            ++currentIdRef;
+        } else {
+            id = idGarbageRef.front();
+            idGarbageRef.pop_front();
+        }
         TimerType newTimerType = ui->radioButtonTimer->isChecked() ? TimerType::Timer : TimerType::AlarmClock;
         Timer newTimer(newTimerType, ui->inputTimer->time(), ui->lineNameTimerEdit->text());
         listWidget->addItem(QString::number(id) + "   " + newTimer.getInfoAboutTimer());
         timersRef[id] = newTimer;
-        id++;
         qDebug() << timersRef[id].getInfoAboutTimer()<<"Size : "<<timersRef.count();
 
         close();
