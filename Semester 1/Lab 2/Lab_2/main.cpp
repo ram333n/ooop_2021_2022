@@ -7,13 +7,8 @@
 
 int main(int argc, char *argv[])
 {
-    try{
-        QApplication a(argc, argv);
-        MainWindow w;
-        w.show();
-        return a.exec();
-    } catch(QException& ex){
-        qDebug()<<ex.what();
-    }
-    return 435543;
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return a.exec();
 }

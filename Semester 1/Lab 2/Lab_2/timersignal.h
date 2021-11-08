@@ -2,11 +2,26 @@
 #define TIMERSIGNAL_H
 
 #include <QDialog>
-//#include <Q
+#include <QSound>
+#include <QDialog>
+
 
 namespace Ui {
 class TimerSignal;
 }
+
+//class Sound : public QWidget
+//{
+//    Q_OBJECT
+
+//public:
+//    Sound(QWidget *parent = 0);
+//    void play();
+
+//private:
+//    QSoundEffect effect;
+//};
+
 
 class TimerSignal : public QDialog
 {
@@ -18,6 +33,8 @@ public:
 
 private slots:
     void on_pushButton_clicked();
+
+    void timerEvent(QTimerEvent* e);
 
 private:
     Ui::TimerSignal *ui;

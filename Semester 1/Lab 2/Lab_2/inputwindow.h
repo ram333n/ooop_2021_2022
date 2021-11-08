@@ -6,6 +6,7 @@
 #include <QListWidget>
 #include <QMessageBox>
 #include <QQueue>
+#include <QDebug>
 
 namespace Ui {
 class InputWindow;

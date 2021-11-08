@@ -7,4 +7,10 @@
         <file>icons/remove.png</file>
         <file>icons/enable.png</file>
     </qresource>
+    <qresource prefix="/sounds"/>
+    <qresource prefix="/audio"/>
+    <qresource prefix="/signals"/>
+    <qresource prefix="/signal">
+        <file>sounds/sound.wav</file>
+    </qresource>
 </RCC>

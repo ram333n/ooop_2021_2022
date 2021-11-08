@@ -9,7 +9,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     setWindowTitle("Smart timers");
-    //ui->listTimersWidget->setEditTriggers( QAbstractItemView::DoubleClicked );
     startTimer(1000);
 }
 
@@ -50,10 +49,18 @@ void MainWindow::on_actionQuit_triggered()
 void MainWindow::updateAllTimers(){
     QTime closestTime = QTime(23,59,59);
     activeTimersCount = 0;
-    std::lock_guard g(mutex); //mb useless
-    for(int i = 0, rowsCount = ui->listTimersWidget->count(); i < rowsCount;){
-        QListWidgetItem* listItem = ui->listTimersWidget->takeItem(i);
-        if(updateSingleTimer(listItem, i)){
+
+    while(!idToRemove.isEmpty()){
+        int i = idToRemove.front();
+        idToRemove.pop_front();
+        removeTimer(ui->listTimersWidget->item(i));
+    }
+
+    int rowsCount = ui->listTimersWidget->count();
+
+    for(int i = 0; i < rowsCount; ){
+        QListWidgetItem* listItem = ui->listTimersWidget->item(i);
+        if(updateSingleTimer(listItem)){
             rowsCount--;
         } else {
             if(!timers[getIdOfListWidgetItem(listItem)].isPaused()){
@@ -66,8 +73,9 @@ void MainWindow::updateAllTimers(){
     updateStatusBar(closestTime);
 }
 
-bool MainWindow::updateSingleTimer(QListWidgetItem* toUpdate, int rowToUpdate){
+bool MainWindow::updateSingleTimer(QListWidgetItem* toUpdate){
     int idx = getIdOfListWidgetItem(toUpdate);
+
     if(!timers[idx].isTimeExpired()){
         if(!timers[idx].isPaused()){
             timers[idx].updateDuration();            
@@ -75,10 +83,6 @@ bool MainWindow::updateSingleTimer(QListWidgetItem* toUpdate, int rowToUpdate){
         QString timerInfo;
         timerInfo = QString::number(idx) + "   " + timers[idx].getInfoAboutTimer();
         toUpdate->setText(timerInfo);
-        ui->listTimersWidget->insertItem(rowToUpdate, toUpdate);
-        if(currentRow > -1){
-            ui->listTimersWidget->item(currentRow)->setSelected(true);
-        }
     } else {
         if(!isDoNotDisturbModeNow()){
             TimerSignal* message = new TimerSignal(timers[idx].getName());
@@ -104,7 +108,6 @@ void MainWindow::removeTimer(QListWidgetItem* toRemove){
     if(!toRemove){
         return;
     }
-    //std::shared_guard g(mutex);
     int idx = getIdOfListWidgetItem(toRemove);
     ui->listTimersWidget->removeItemWidget(toRemove);
     if(!timers[idx].isPaused()){
@@ -164,7 +167,8 @@ void MainWindow::on_actionRemoveTimer_triggered()
     if(!toRemove){
         QMessageBox::warning(this, "Warning", "Timer isn't selected");
     } else {
-        removeTimer(toRemove);
+        toRemove->setHidden(true);
+        idToRemove.push_back(currentRow);
     }
 }
 
@@ -212,6 +216,5 @@ void MainWindow::on_listTimersWidget_itemClicked(QListWidgetItem *item)
     } else {
         currentRow = -1;
     }
-    qDebug()<<"CURRENT ROW"<<currentRow;
 }
 

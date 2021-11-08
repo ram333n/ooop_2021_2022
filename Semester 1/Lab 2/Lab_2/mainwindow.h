@@ -48,7 +48,7 @@ private slots:
 
 private:
     void updateAllTimers();
-    bool updateSingleTimer(QListWidgetItem* toUpdate, int posToInsert);
+    bool updateSingleTimer(QListWidgetItem* toUpdate);
     void updateStatusBar(const QTime& closestTimer);
     void removeTimer(QListWidgetItem* toRemove);
     void pauseTimer(QListWidgetItem* toPause);
@@ -60,6 +60,7 @@ private:
     Ui::MainWindow *ui;
     QHash<int ,Timer> timers;
     QQueue<int> idGarbage;
+    QQueue<int> idToRemove;
     QPair<QTime, QTime> doNotDisturbModeTimePoints = {QTime(0,0,0), QTime(0,0,0)};
 
     int activeTimersCount = 0;
@@ -69,8 +70,6 @@ private:
     QTimer* oneSecondTimer;
     InputWindow* inputWindow;
     DoNotDisturbWindow* doNotDisturbWindow;
-
-    std::shared_mutex mutex;
 
 };
 #endif // MAINWINDOW_H

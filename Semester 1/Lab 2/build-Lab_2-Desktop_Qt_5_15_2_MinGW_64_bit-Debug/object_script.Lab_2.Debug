@@ -1,0 +1,11 @@
+debug/donotdisturbwindow.o
+debug/inputwindow.o
+debug/main.o
+debug/mainwindow.o
+debug/timer.o
+debug/timersignal.o
+debug/qrc_multimedia.o
+debug/moc_donotdisturbwindow.o
+debug/moc_inputwindow.o
+debug/moc_mainwindow.o
+debug/moc_timersignal.o
