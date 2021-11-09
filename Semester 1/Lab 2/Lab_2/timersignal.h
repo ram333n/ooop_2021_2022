@@ -10,18 +10,6 @@ namespace Ui {
 class TimerSignal;
 }
 
-//class Sound : public QWidget
-//{
-//    Q_OBJECT
-
-//public:
-//    Sound(QWidget *parent = 0);
-//    void play();
-
-//private:
-//    QSoundEffect effect;
-//};
-
 
 class TimerSignal : public QDialog
 {

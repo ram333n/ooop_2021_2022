@@ -2,30 +2,6 @@
 #include "ui_timersignal.h"
 
 
-
-//class Widget : public QWidget
-//{
-//    Q_OBJECT
-
-//public:
-//    Widget(QWidget *parent = 0);
-//    ~Widget();
-//    void play();
-
-//private:
-//    QSoundEffect effect;
-//};
-
-//Sound::Sound(QWidget *parent) : QWidget(parent){
-//    effect.setSource(QUrl::fromLocalFile("sound.wav"));
-//    effect.setLoopCount(QSoundEffect::Infinite);
-//    effect.setVolume(1.00f);
-//}
-
-//void Sound::play(){
-//    effect.play();
-//}
-
 TimerSignal::TimerSignal(const QString& timerName, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::TimerSignal)

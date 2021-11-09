@@ -50,12 +50,11 @@ void MainWindow::updateAllTimers(){
     QTime closestTime = QTime(23,59,59);
     activeTimersCount = 0;
 
-    while(!idToRemove.isEmpty()){
-        int i = idToRemove.front();
-        idToRemove.pop_front();
-        removeTimer(ui->listTimersWidget->item(i));
+    for(auto it = idToRemove.rbegin(); it!=idToRemove.rend(); ++it){
+        int idx = *it;
+        removeTimer(ui->listTimersWidget->item(idx));
     }
-
+    idToRemove.clear();
     int rowsCount = ui->listTimersWidget->count();
 
     for(int i = 0; i < rowsCount; ){
@@ -64,7 +63,7 @@ void MainWindow::updateAllTimers(){
             rowsCount--;
         } else {
             if(!timers[getIdOfListWidgetItem(listItem)].isPaused()){
-                closestTime = std::min(closestTime, timers[getIdOfListWidgetItem(listItem)].getDurationInQTime());
+                closestTime = std::min(closestTime, timers[getIdOfListWidgetItem(listItem)].getDuration());
                 activeTimersCount++;
             }
             i++;
@@ -99,7 +98,7 @@ void MainWindow::updateStatusBar(const QTime& closestTimer){
     QString newStatusBarInfo;
     newStatusBarInfo +=activeTimersCount != 0 ? "Active timers : " + QString::number(activeTimersCount) : "No active timers";
     newStatusBarInfo +=", ";
-    newStatusBarInfo +="Time to closest timer signal: " + (closestTimer != QTime(23,59,59) ? closestTimer.toString("hh:mm:ss") : "-");
+    newStatusBarInfo +="time to closest timer signal: " + (closestTimer != QTime(23,59,59) ? closestTimer.toString("hh:mm:ss") : "-");
     ui->statusbar->showMessage(newStatusBarInfo);
 }
 
@@ -110,9 +109,9 @@ void MainWindow::removeTimer(QListWidgetItem* toRemove){
     }
     int idx = getIdOfListWidgetItem(toRemove);
     ui->listTimersWidget->removeItemWidget(toRemove);
-    if(!timers[idx].isPaused()){
-        --activeTimersCount;
-    }
+//    if(!timers[idx].isPaused()){
+//        --activeTimersCount;
+//    }
     timers.remove(idx);
     idGarbage.push_back(idx);
     delete toRemove;
@@ -168,7 +167,8 @@ void MainWindow::on_actionRemoveTimer_triggered()
         QMessageBox::warning(this, "Warning", "Timer isn't selected");
     } else {
         toRemove->setHidden(true);
-        idToRemove.push_back(currentRow);
+        idToRemove.insert(currentRow);
+        currentRow--;
     }
 }
 
@@ -200,14 +200,12 @@ void MainWindow::on_actionPauseAllTimers_triggered()
     }
 }
 
-
 void MainWindow::on_actionEnableAllTimers_triggered()
 {
     for(auto& timer : timers){
         timer.enableTimer();
     }
 }
-
 
 void MainWindow::on_listTimersWidget_itemClicked(QListWidgetItem *item)
 {

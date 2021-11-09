@@ -10,7 +10,7 @@
 #include <QPair>
 #include <QQueue>
 
-#include <shared_mutex>
+#include <set>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -60,7 +60,7 @@ private:
     Ui::MainWindow *ui;
     QHash<int ,Timer> timers;
     QQueue<int> idGarbage;
-    QQueue<int> idToRemove;
+    std::set<int> idToRemove;
     QPair<QTime, QTime> doNotDisturbModeTimePoints = {QTime(0,0,0), QTime(0,0,0)};
 
     int activeTimersCount = 0;

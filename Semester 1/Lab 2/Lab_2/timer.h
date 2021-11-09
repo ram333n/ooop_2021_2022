@@ -14,16 +14,15 @@ public:
     //void changeStatus();
     void enableTimer();
     void pauseTimer();
-    long getDuration() const;
     TimerType getTimerType() const;
     bool isPaused() const;
     bool isTimeExpired() const;
-    QTime getDurationInQTime() const;
+    QTime getDuration() const;
     QString getInfoAboutTimer() const;
     QString getName() const;
     void updateDuration();
 private:
-    long duration;
+    int duration;
     TimerType timerType;
     QString name;
     bool isPaused_;
