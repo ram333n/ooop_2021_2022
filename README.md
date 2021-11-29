@@ -7,3 +7,6 @@ Variants : (2 and 7) - first list, 2 - second list
 Lab 2 :
 Smart timers(DND mode, indication of progress to the closest timer signal and calculation of count of active timers)
 
+Lab 3 :
+Simple doc scanner(OpenCV and tesseract OCR)
+
