@@ -44,9 +44,6 @@
     <ClCompile Include="doctest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graphs.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="figures.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

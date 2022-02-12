@@ -13,7 +13,7 @@
 TEST_CASE("Default linked list construct") {
     LinkedList<int> l;
     CHECK(l.Size() == 0);
-    CHECK(l.Empty() == true);
+    CHECK(l.Empty());
     CHECK(l.GetHead() == l.GetTail());
     CHECK(l.GetHead() == nullptr);
 }
@@ -25,7 +25,7 @@ TEST_CASE("LinkedList<int>::PushBack()") {
     std::iota(source.begin(), source.end(), 0);
     LinkedList<int> l;
 
-    CHECK(l.Empty() == true);
+    CHECK(l.Empty());
     for (int num : source) {
         l.PushBack(num);
     }
@@ -99,7 +99,7 @@ TEST_CASE("LinkedList<int>::Remove()") {
 
     CHECK(l.GetHead() == l.GetTail());
     l.PopBack();
-    CHECK(l.Empty() == true);
+    CHECK(l.Empty());
 
     std::vector<int> source(20);
     std::iota(source.begin(), source.end(), 0);
@@ -209,12 +209,12 @@ TEST_CASE("ArrayList<string>::Insert() & ArrayList<string>::Remove()") {
     test_empty.Remove(0);
     CHECK(test_empty.Size() == 0);
     CHECK(test_empty.Capacity() == 1);
-    CHECK(test_empty.Empty() == true);
+    CHECK(test_empty.Empty());
 
     test_empty.Insert(-1,1000);
     CHECK(test_empty.Size() == 0);
     CHECK(test_empty.Capacity() == 1);
-    CHECK(test_empty.Empty() == true);
+    CHECK(test_empty.Empty());
 }
 
 TEST_CASE("Test simple iterators of ArrayList<int> on some stl algorithms") {
@@ -231,7 +231,7 @@ TEST_CASE("Test simple iterators of ArrayList<int> on some stl algorithms") {
     std::sort(array_list.begin(), array_list.end());
     bool is_sorted = std::is_sorted(array_list.begin(), array_list.end());
 
-    CHECK(is_sorted == true);
+    CHECK(is_sorted);
 
     auto it = std::find(array_list.begin(), array_list.end(), 432);
     CHECK(*it == 432);
@@ -246,99 +246,102 @@ TEST_CASE("Test simple iterators of ArrayList<int> on some stl algorithms") {
     CHECK(equal_range_res.second - equal_range_res.first == std::count(array_list.begin(), array_list.end(), 10));
 }
 
-TEST_CASE("Adjacency list") {
-    AdjacencyList graph(6);
-    graph.AddEdge(0, 3);
-    graph.AddEdge(0, 3);
+TEST_CASE("Graphs") {
+    SUBCASE("Adjacency list") {
+        Graphs::AdjacencyList graph(6);
+        graph.AddEdge(0, 3);
+        graph.AddEdge(0, 3);
 
-    graph.AddEdge(0, 4);
-    graph.AddEdge(0, 5);
+        graph.AddEdge(0, 4);
+        graph.AddEdge(0, 5);
 
-    graph.AddEdge(1, 3);
-    graph.AddEdge(1, 4);
-    graph.AddEdge(1, 5);
+        graph.AddEdge(1, 3);
+        graph.AddEdge(1, 4);
+        graph.AddEdge(1, 5);
 
-    graph.AddEdge(2, 3);
-    graph.AddEdge(2, 4);
-    graph.AddEdge(2, 5);
+        graph.AddEdge(2, 3);
+        graph.AddEdge(2, 4);
+        graph.AddEdge(2, 5);
 
-    CHECK(graph.IsConnected() == true);
-    CHECK(graph.IsEdgeExist(0, 3) == true);
-    CHECK(graph.IsEdgeExist(0, 4) == true);
-    CHECK(graph.IsEdgeExist(0, 5) == true);
-    CHECK(graph.IsEdgeExist(1, 3) == true);
-    CHECK(graph.IsEdgeExist(1, 4) == true);
-    CHECK(graph.IsEdgeExist(1, 5) == true);
-    CHECK(graph.IsEdgeExist(1, 3) == true);
-    CHECK(graph.IsEdgeExist(1, 4) == true);
-    CHECK(graph.IsEdgeExist(1, 5) == true);
+        CHECK(graph.IsConnected());
+        CHECK(graph.IsEdgeExist(0, 3));
+        CHECK(graph.IsEdgeExist(0, 4));
+        CHECK(graph.IsEdgeExist(0, 5));
+        CHECK(graph.IsEdgeExist(1, 3));
+        CHECK(graph.IsEdgeExist(1, 4));
+        CHECK(graph.IsEdgeExist(1, 5));
+        CHECK(graph.IsEdgeExist(1, 3));
+        CHECK(graph.IsEdgeExist(1, 4));
+        CHECK(graph.IsEdgeExist(1, 5));
 
-    CHECK(graph.DistanceBetweenTwoVertices(0, 2) == 2);
-    CHECK(graph.DistanceBetweenTwoVertices(0, 1) == 2);
-    CHECK(graph.DistanceBetweenTwoVertices(0, 5) == 1);
-    CHECK(graph.DistanceBetweenTwoVertices(0, 0) == 0);
+        CHECK(graph.DistanceBetweenTwoVertices(0, 2) == 2);
+        CHECK(graph.DistanceBetweenTwoVertices(0, 1) == 2);
+        CHECK(graph.DistanceBetweenTwoVertices(0, 5) == 1);
+        CHECK(graph.DistanceBetweenTwoVertices(0, 0) == 0);
 
-    graph.RemoveVertex(0);
-    graph.RemoveVertex(3);
+        graph.RemoveVertex(0);
+        graph.RemoveVertex(3);
 
-    CHECK(graph.IsConnected() == true);
-    CHECK(graph.DistanceBetweenTwoVertices(1, 2) == 2);
-    graph.RemoveEdge(2, 4);
-    graph.RemoveEdge(1, 5);
+        CHECK(graph.IsConnected());
+        CHECK(graph.DistanceBetweenTwoVertices(1, 2) == 2);
+        graph.RemoveEdge(2, 4);
+        graph.RemoveEdge(1, 5);
 
-    CHECK(graph.IsConnected() == false);
-    CHECK(graph.DistanceBetweenTwoVertices(2, 4) == 0);
+        CHECK(!graph.IsConnected());
+        CHECK(graph.DistanceBetweenTwoVertices(2, 4) == 0);
+    }
+    SUBCASE("Adjacency matrix") {
+        Graphs::AdjacencyMatrix graph(6);
+        graph.AddEdge(0, 3);
+        graph.AddEdge(0, 3);
+
+        graph.AddEdge(0, 4);
+        graph.AddEdge(0, 5);
+
+        graph.AddEdge(1, 3);
+        graph.AddEdge(1, 4);
+        graph.AddEdge(1, 5);
+
+        graph.AddEdge(2, 3);
+        graph.AddEdge(2, 4);
+        graph.AddEdge(2, 5);
+
+        CHECK(graph.IsConnected());
+        CHECK(graph.IsEdgeExist(0, 3));
+        CHECK(graph.IsEdgeExist(0, 4));
+        CHECK(graph.IsEdgeExist(0, 5));
+        CHECK(graph.IsEdgeExist(1, 3));
+        CHECK(graph.IsEdgeExist(1, 4));
+        CHECK(graph.IsEdgeExist(1, 5));
+        CHECK(graph.IsEdgeExist(1, 3));
+        CHECK(graph.IsEdgeExist(1, 4));
+        CHECK(graph.IsEdgeExist(1, 5));
+
+        CHECK(graph.DistanceBetweenTwoVertices(0, 2) == 2);
+        CHECK(graph.DistanceBetweenTwoVertices(0, 1) == 2);
+        CHECK(graph.DistanceBetweenTwoVertices(0, 5) == 1);
+        CHECK(graph.DistanceBetweenTwoVertices(0, 0) == 0);
+
+        graph.RemoveVertex(0);
+        graph.RemoveVertex(3);
+
+        CHECK(graph.IsConnected());
+        CHECK(graph.DistanceBetweenTwoVertices(1, 2) == 2);
+        graph.RemoveEdge(2, 4);
+        graph.RemoveEdge(1, 5);
+
+        CHECK(!graph.IsEdgeExist(2, 4));
+        CHECK(!graph.IsEdgeExist(1, 5));
+
+        CHECK(!graph.IsConnected());
+        CHECK(graph.DistanceBetweenTwoVertices(2, 4) == 0);
+        graph.AddEdge(2, 4);
+
+        CHECK(graph.IsConnected());
+    }
+    
 }
 
-TEST_CASE("Adjacency matrix") {
-    AdjacencyMatrix graph(6);
-    graph.AddEdge(0, 3);
-    graph.AddEdge(0, 3);
-
-    graph.AddEdge(0, 4);
-    graph.AddEdge(0, 5);
-
-    graph.AddEdge(1, 3);
-    graph.AddEdge(1, 4);
-    graph.AddEdge(1, 5);
-
-    graph.AddEdge(2, 3);
-    graph.AddEdge(2, 4);
-    graph.AddEdge(2, 5);
-
-    CHECK(graph.IsConnected());
-    CHECK(graph.IsEdgeExist(0, 3) == true);
-    CHECK(graph.IsEdgeExist(0, 4) == true);
-    CHECK(graph.IsEdgeExist(0, 5) == true);
-    CHECK(graph.IsEdgeExist(1, 3) == true);
-    CHECK(graph.IsEdgeExist(1, 4) == true);
-    CHECK(graph.IsEdgeExist(1, 5) == true);
-    CHECK(graph.IsEdgeExist(1, 3) == true);
-    CHECK(graph.IsEdgeExist(1, 4) == true);
-    CHECK(graph.IsEdgeExist(1, 5) == true);
-
-    CHECK(graph.DistanceBetweenTwoVertices(0, 2) == 2);
-    CHECK(graph.DistanceBetweenTwoVertices(0, 1) == 2);
-    CHECK(graph.DistanceBetweenTwoVertices(0, 5) == 1);
-    CHECK(graph.DistanceBetweenTwoVertices(0, 0) == 0);
-
-    graph.RemoveVertex(0);
-    graph.RemoveVertex(3);
-
-    CHECK(graph.IsConnected() == true);
-    CHECK(graph.DistanceBetweenTwoVertices(1, 2) == 2);
-    graph.RemoveEdge(2, 4);
-    graph.RemoveEdge(1, 5);
-
-    CHECK(graph.IsEdgeExist(2, 4) == false);
-    CHECK(graph.IsEdgeExist(1, 5) == false);
-
-    CHECK(graph.IsConnected() == false);
-    CHECK(graph.DistanceBetweenTwoVertices(2, 4) == 0);
-    graph.AddEdge(2, 4);
-
-    CHECK(graph.IsConnected() == true);
-}
 
 TEST_CASE("Test reflections") {
     Point p_1 = { 1,1 };
@@ -397,9 +400,9 @@ TEST_CASE("Tests for sorting algorithms") {
         QuickSort(arr_list, 0, arr_list.Size() - 1, comparator);
         QuickSort(linked_list.GetHead(), linked_list.GetTail(), comparator);
 
-        CHECK(std::is_sorted(stl_list.begin(), stl_list.end(), comparator) == true);
-        CHECK(std::is_sorted(arr_list.begin(), arr_list.end(), comparator) == true);
-        CHECK(IsSorted(linked_list,comparator)== true);
+        CHECK(std::is_sorted(stl_list.begin(), stl_list.end(), comparator));
+        CHECK(std::is_sorted(arr_list.begin(), arr_list.end(), comparator));
+        CHECK(IsSorted(linked_list,comparator));
     }
 
     {
@@ -417,9 +420,9 @@ TEST_CASE("Tests for sorting algorithms") {
 
 
 
-        CHECK(std::is_sorted(stl_list.begin(), stl_list.end(), comparator) == true);
-        CHECK(std::is_sorted(arr_list.begin(), arr_list.end(), comparator) == true);
-        CHECK(IsSorted(linked_list, comparator) == true);
+        CHECK(std::is_sorted(stl_list.begin(), stl_list.end(), comparator));
+        CHECK(std::is_sorted(arr_list.begin(), arr_list.end(), comparator));
+        CHECK(IsSorted(linked_list, comparator));
     }
 
     {
@@ -434,8 +437,8 @@ TEST_CASE("Tests for sorting algorithms") {
         InsertionSort(linked_list, comparator);
         InsertionSort(arr_list, comparator);
 
-        CHECK(std::is_sorted(arr_list.begin(), arr_list.end(), comparator) == true);
-        CHECK(IsSorted(linked_list, comparator) == true);
+        CHECK(std::is_sorted(arr_list.begin(), arr_list.end(), comparator));
+        CHECK(IsSorted(linked_list, comparator));
     }      
 
 }

@@ -140,7 +140,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="figures.cpp" />
-    <ClCompile Include="graphs.cpp" />
     <ClCompile Include="doctest.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
