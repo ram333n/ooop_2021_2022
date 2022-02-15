@@ -144,6 +144,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="abstract_list.h" />
     <ClInclude Include="figures.h" />
     <ClInclude Include="graphs.h" />
     <ClInclude Include="array_list.h" />

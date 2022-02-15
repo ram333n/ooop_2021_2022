@@ -12,7 +12,7 @@ struct Node {
 template<typename T>
 class LinkedList {	
 private:
-	size_t size = 0;
+	size_t size_ = 0;
 	Node<T>* head = nullptr;
 	Node<T>* tail = nullptr;
 
@@ -41,11 +41,11 @@ public:
 template<typename T>
 LinkedList<T>::LinkedList(Node<T>* new_head) {
 	if (!new_head) {
-		size = 1;
+		size_ = 1;
 		head = new_head;
 		while (new_head->next) {
 			new_head = new_head->next;
-			++size;
+			++size_;
 		}
 		tail = new_head;
 	}
@@ -62,7 +62,7 @@ void LinkedList<T>::PushBack(T new_value) {
 	}
 	to_push->prev = tail;
 	tail = to_push;
-	++size;
+	++size_;
 }
 
 template<typename T>
@@ -76,7 +76,7 @@ void LinkedList<T>::PushFront(T new_value) {
 	}
 	to_push->next = head;
 	head = to_push;
-	++size;
+	++size_;
 }
 
 template<typename T>
@@ -94,7 +94,7 @@ void LinkedList<T>::Insert(T new_value, Node<T>* pos_to_insert) {
 		to_insert->prev = pos_to_insert->prev;
 		to_insert->next = pos_to_insert;
 		pos_to_insert->prev = to_insert;
-		++size;
+		++size_;
 	}
 }
 
@@ -105,7 +105,7 @@ bool LinkedList<T>::Empty() const {
 
 template<typename T>
 size_t LinkedList<T>::Size() const {
-	return size;
+	return size_;
 }
 
 template<typename T>
@@ -129,7 +129,7 @@ void LinkedList<T>::Remove(Node<T>* to_remove) {
 	}
 
 	delete to_remove;
-	--size;
+	--size_;
 }
 
 template<typename T>

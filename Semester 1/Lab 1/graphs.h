@@ -7,6 +7,7 @@
 namespace Graphs {
 	class AbstractGraph {
 	public:
+		virtual ~AbstractGraph() = default;
 		virtual bool IsEdgeExist(int from, int to) const = 0;
 
 		virtual void AddVertex(int number_of_vertex) = 0;
