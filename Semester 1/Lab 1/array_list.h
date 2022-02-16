@@ -5,7 +5,7 @@
 namespace Lists {
 	template<typename T>
 	class ArrayListIterator : public std::iterator<std::random_access_iterator_tag, T> {
-	protected:
+	private:
 		T* ptr_;
 		ArrayListIterator(T* ptr) : ptr_(ptr) {}
 
@@ -43,7 +43,7 @@ namespace Lists {
 
 		//Assign and access operators
 
-		ArrayListIterator& operator=(ArrayListIterator rhs) {
+		ArrayListIterator& operator=(const ArrayListIterator& rhs) {
 			ptr_ = rhs.ptr_;
 			return *this;
 		}

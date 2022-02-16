@@ -1,169 +1,203 @@
 #pragma once
 #include <iostream>
+#include "abstract_list.h"
 
-template<typename T>
-struct Node {
-	T value;
-	Node* next, * prev;
-	Node() : next(nullptr), prev(nullptr) {};
-	Node(T new_value) : value(std::move(new_value)), next(nullptr), prev(nullptr) {};
-};
+namespace Lists {
+	template<typename T>
+	struct Node {
+		T value;
+		Node* next, * prev;
+		Node() : next(nullptr), prev(nullptr) {};
+		Node(T new_value) : value(std::move(new_value)), next(nullptr), prev(nullptr) {};
+	};
 
-template<typename T>
-class LinkedList {	
-private:
-	size_t size_ = 0;
-	Node<T>* head = nullptr;
-	Node<T>* tail = nullptr;
+	template<typename T>
+	class LinkedListIterator : public std::iterator<std::bidirectional_iterator_tag, T> {
+	private:
+		Node<T>* ptr_;
+		LinkedListIterator(Node<T>* ptr) : ptr_(ptr) {}
 
-public:	
-	LinkedList() {};
-	LinkedList(Node<T>* new_head);
+		template <typename Type>
+		friend class LinkedList;
+	public:
+		LinkedListIterator() : ptr_(nullptr) {}
+		LinkedListIterator(const LinkedListIterator& it) : ptr_(it.ptr_) {}
 
-	void PushBack(T new_value);
-	void PushFront(T new_value);
-	void Insert(T new_value, Node<T>* pos_to_insert);
+		//Comparators
 
-	bool Empty() const;
-	size_t Size() const;
-
-	void Remove(Node<T>* to_remove);
-	void PopBack();
-	void PopFront();
-
-	Node<T>* GetHead() const ;
-	Node<T>* GetTail() const ;
-	Node<T>* Find(const T& to_find);
-
-	~LinkedList();
-};
-
-template<typename T>
-LinkedList<T>::LinkedList(Node<T>* new_head) {
-	if (!new_head) {
-		size_ = 1;
-		head = new_head;
-		while (new_head->next) {
-			new_head = new_head->next;
-			++size_;
+		bool operator==(LinkedListIterator rhs) const {
+			return ptr_ == rhs.ptr_;
 		}
-		tail = new_head;
-	}
-};
 
-template<typename T>
-void LinkedList<T>::PushBack(T new_value) {
-	Node<T>* to_push = new Node<T>(std::move(new_value));
-	if (!tail) {
-		head = to_push;
-	}
-	else {
-		tail->next = to_push;
-	}
-	to_push->prev = tail;
-	tail = to_push;
-	++size_;
-}
+		bool operator!=(LinkedListIterator rhs) const {
+			return ptr_ != rhs.ptr_;
+		}
 
-template<typename T>
-void LinkedList<T>::PushFront(T new_value) {
-	Node<T>* to_push = new Node<T>(std::move(new_value));
-	if (!head) {
-		tail = to_push;
-	}
-	else {
-		head->prev = to_push;
-	}
-	to_push->next = head;
-	head = to_push;
-	++size_;
-}
+		//Assign and access operators
 
-template<typename T>
-void LinkedList<T>::Insert(T new_value, Node<T>* pos_to_insert) {
-	if (!pos_to_insert || !head) {
-		return;
-	}
+		LinkedListIterator& operator=(const LinkedListIterator& rhs) {
+			ptr_ = rhs.ptr_;
+			return *this;
+		}
 
-	if (pos_to_insert == head) {
-		PushFront(new_value);
-	}
-	else {
-		Node<T>* to_insert = new Node<T>(std::move(new_value));
-		pos_to_insert->prev->next = to_insert;
-		to_insert->prev = pos_to_insert->prev;
-		to_insert->next = pos_to_insert;
-		pos_to_insert->prev = to_insert;
-		++size_;
-	}
-}
+		T& operator*() const {
+			return ptr_->value;
+		}
 
-template<typename T>
-bool LinkedList<T>::Empty() const {
-	return head == nullptr;
-}
+		T* operator->() {
+			return &ptr_->value;
+		}
 
-template<typename T>
-size_t LinkedList<T>::Size() const {
-	return size_;
-}
+		const T* operator->() const {
+			return &ptr_->value;
+		}
 
-template<typename T>
-void LinkedList<T>::Remove(Node<T>* to_remove) {
-	if (!to_remove||!head) {
-		return;
-	}
+		//Increment and decrement operators
 
-	if (to_remove->prev) {
-		to_remove->prev->next = to_remove->next;
-	}
-	else {
-		head = to_remove->next;
-	}
+		LinkedListIterator& operator++() {
+			if (ptr_) {
+				ptr_ = ptr_->next;
+			}
+			return *this;
+		}
 
-	if (to_remove->next) {
-		to_remove->next->prev = to_remove->prev;
-	}
-	else {
-		tail = to_remove->prev;
-	}
+		LinkedListIterator& operator--() {
+			if (ptr_) {
+				ptr_ = ptr_->prev;
+			}
+			return *this;
+		}
 
-	delete to_remove;
-	--size_;
-}
+		LinkedListIterator operator++(int) {
+			LinkedListIterator temp(*this);
+			if (ptr_) {
+				ptr_ = ptr_->next;
+			}
+			return temp;
+		}
 
-template<typename T>
-void LinkedList<T>::PopBack() {
-	Remove(tail);
-}
+		LinkedListIterator operator--(int) {
+			LinkedListIterator temp(*this);
+			if (ptr_) {
+				ptr_ = ptr_->prev;
+			}
+			return temp;
+		}
+	};
 
-template<typename T>
-void LinkedList<T>::PopFront() {
-	Remove(head);
-}
 
-template<typename T>
-Node<T>* LinkedList<T>::GetHead() const {
-	return head;
-}
+	template<typename T>
+	class LinkedList : public AbstractList<T, LinkedListIterator<T>> {
+	private:
+		Node<T>* head_ = nullptr;
+		Node<T>* tail_ = nullptr;
+		Node<T>* sentinel_;
+	public:
+		LinkedList() : sentinel_(new Node<T>()){};
 
-template<typename T>
-Node<T>* LinkedList<T>::GetTail() const {
-	return tail;
-}
+		void Insert(T to_insert, LinkedListIterator<T> pos) override {
+			if (!head_) {
+				return;
+			}
 
-template<typename T>
-Node<T>* LinkedList<T>::Find(const T& to_find) {
-	Node<T>* current = GetHead();
-	while (current && current->value != to_find) {
-		current = current->next;
-	}
-	return current;
-}
+			if (pos.ptr_ == sentinel_) {
+				PushBack(to_insert);
+			}
+			else if (pos.ptr_ == head_) {
+				PushFront(to_insert);
+			}
+			else {
+				Node<T>* node_to_insert = new Node<T>(std::move(to_insert));
+				pos.ptr_->prev->next = node_to_insert;
+				node_to_insert->prev = pos.ptr_->prev;
+				node_to_insert->next = pos.ptr_;
+				pos.ptr_->prev = node_to_insert;
+				++this->size_;
+			}
+		}
 
-template<typename T>
-LinkedList<T>::~LinkedList() {
-	while (head) {
-		PopFront();
-	}
+		void PushBack(T to_insert) override {
+			Node<T>* node_to_push = new Node<T>(std::move(to_insert));
+			if (!tail_) {
+				head_ = node_to_push;
+			}
+			else {
+				tail_->next = node_to_push;
+			}
+			node_to_push->prev = tail_;
+			tail_ = node_to_push;
+
+			sentinel_->prev = tail_;
+			tail_->next = sentinel_;
+
+			++this->size_;
+		}
+
+		void PushFront(T to_insert) {
+			Node<T>* node_to_push = new Node<T>(std::move(to_insert));
+			if (!head_) {
+				tail_ = node_to_push;
+			}
+			else {
+				head_->prev = node_to_push;
+			}
+			node_to_push->next = head_;
+			head_ = node_to_push;
+			++this->size_;
+		}
+
+		void Remove(LinkedListIterator<T> pos) override {
+			if (pos.ptr_ == sentinel_ || !head_ ) {
+				return;
+			}
+
+			if (pos.ptr_->prev) {
+				pos.ptr_->prev->next = pos.ptr_->next;
+			}
+			else {
+				head_ = pos.ptr_->next != sentinel_ ? pos.ptr_->next : nullptr;
+			}
+
+			if (pos.ptr_->next && pos.ptr_->next != sentinel_) {
+				pos.ptr_->next->prev = pos.ptr_->prev;
+			}
+			else {
+				tail_ = pos.ptr_->next != sentinel_ ? pos.ptr_->prev : nullptr;
+			}
+
+			delete pos.ptr_;
+			--this->size_;
+		};
+
+		void PopBack() override {
+			Remove(LinkedListIterator<T>(tail_));
+		}
+
+		void PopFront() {
+			Remove(LinkedListIterator<T>(head_));
+		};
+
+		LinkedListIterator<T> begin() override {
+			return head_ ? LinkedListIterator<T>(head_) : end();
+		}
+
+		LinkedListIterator<T> end() override {
+			return LinkedListIterator<T>(sentinel_);
+		}
+
+		const LinkedListIterator<T> begin() const override {
+			return head_ ? LinkedListIterator<T>(head_) : end();
+		}
+
+		const LinkedListIterator<T> end() const override {
+			return LinkedListIterator<T>(sentinel_);
+		}
+
+		~LinkedList() {
+			while (head_) {
+				PopFront();
+			}
+			delete sentinel_;
+		}
+	};
 }

@@ -11,11 +11,10 @@
 #include <numeric>
 
 TEST_CASE("Default linked list construct") {
-    LinkedList<int> l;
-    CHECK(l.Size() == 0);
-    CHECK(l.Empty());
-    CHECK(l.GetHead() == l.GetTail());
-    CHECK(l.GetHead() == nullptr);
+    Lists::LinkedList<int> linked_list;
+    CHECK(linked_list.Size() == 0);
+    CHECK(linked_list.Empty());
+    CHECK(linked_list.begin() == linked_list.end());
 }
 
 TEST_CASE("LinkedList<int>::PushBack()") {
@@ -23,35 +22,35 @@ TEST_CASE("LinkedList<int>::PushBack()") {
     source.resize(20);
 
     std::iota(source.begin(), source.end(), 0);
-    LinkedList<int> l;
+    Lists::LinkedList<int> linked_list;
 
-    CHECK(l.Empty());
+    CHECK(linked_list.Empty());
     for (int num : source) {
-        l.PushBack(num);
+        linked_list.PushBack(num);
     }
 
-    for (auto num = l.GetHead(); num; num = num->next) {
-        dest.push_back(num->value);
+    for (auto num : linked_list) {
+        dest.push_back(num);
     }
 
     CHECK(source == dest);
-    CHECK(l.GetHead()->value == 0);
-    CHECK(l.Size() == 20);
+    CHECK(*linked_list.begin() == 0);
+    CHECK(linked_list.Size() == 20);
 }
 
 TEST_CASE("LinkedList<int>::PushFront()") {
     std::vector<int> source, dest;
-    LinkedList<int> l;
+    Lists::LinkedList<int> linked_list;
     for (int i = 0; i < 20; ++i) {
         source.push_back(i);
-        l.PushFront(i);
+        linked_list.PushFront(i);
     }
-    CHECK(l.Size() == 20);
-    CHECK(l.GetHead()->value == 19);
+    CHECK(linked_list.Size() == 20);
+    CHECK(*linked_list.begin() == 19);
     std::reverse(source.begin(), source.end());
 
-    for (auto num = l.GetHead(); num; num = num->next) {
-        dest.push_back(num->value);
+    for (auto num : linked_list) {
+        dest.push_back(num);
     }
     CHECK(source == dest);
 }
@@ -59,73 +58,72 @@ TEST_CASE("LinkedList<int>::PushFront()") {
 TEST_CASE("LinkedList<int>::Insert()") {
     std::vector<int> source(10),dest;
     std::iota(source.begin(), source.end(), 0);
-    LinkedList<int> l;
+    Lists::LinkedList<int> linked_list;
 
     for (int num : source) {
-        l.PushBack(num);
+        linked_list.PushBack(num);
     }
 
-    CHECK(l.Size() == 10);
-    CHECK(l.GetHead()->value == 0);
-    auto found_num = l.Find(5);
+    CHECK(linked_list.Size() == 10);
+    CHECK(*linked_list.begin() == 0);
+    auto found_num = std::find(linked_list.begin(), linked_list.end(), 5);
     
-    CHECK(found_num->value == 5);
+    CHECK(*found_num == 5);
 
-    l.Insert(100, found_num);
-    CHECK(l.Size() == 11);
+    linked_list.Insert(100, found_num);
+    CHECK(linked_list.Size() == 11);
     auto source_it = std::find(source.begin(), source.end(), 5);
     source.insert(source_it, 100);
 
-    for (auto num = l.GetHead(); num;num = num->next) {
-        dest.push_back(num->value);
+    for (auto num : linked_list) {
+        dest.push_back(num);
     }
 
     CHECK(source == dest);
 
-    l.Insert(3000, l.GetHead());
-    CHECK(l.Size() == 12);
-    CHECK(l.GetHead()->value == 3000);
+    linked_list.Insert(3000, linked_list.begin());
+    CHECK(linked_list.Size() == 12);
+    CHECK(*linked_list.begin() == 3000);
 
-    l.Insert(-3000, l.GetTail()->next);
-    CHECK(l.Size() == 12);
+    linked_list.Insert(-3000, linked_list.end());
+    CHECK(linked_list.Size() == 13);
 }
 
 TEST_CASE("LinkedList<int>::Remove()") {
-    LinkedList<int> l;
-    l.PushBack(1);
-    l.PushBack(13);
+    Lists::LinkedList<int> linked_list;
+    linked_list.PushBack(1);
+    linked_list.PushBack(13);
 
-    l.Remove(l.Find(13));
+    linked_list.Remove(std::find(linked_list.begin(), linked_list.end(), 13));
 
-    CHECK(l.GetHead() == l.GetTail());
-    l.PopBack();
-    CHECK(l.Empty());
+    CHECK(++linked_list.begin() == linked_list.end());
+    linked_list.PopBack();
+    CHECK(linked_list.Empty());
 
     std::vector<int> source(20);
     std::iota(source.begin(), source.end(), 0);
 
     for (int num : source) {
-        l.PushBack(num);
+        linked_list.PushBack(num);
     }
 
-    auto current_node = l.GetTail();
-    while (current_node) {
-        auto temp = current_node;
-        current_node = current_node->prev;
+    auto it = linked_list.begin();
+    while (it != linked_list.end()) {
+        auto temp = it++;
 
-        if (temp->value % 4 > 0) {
-            l.Remove(temp);
+        if (*temp % 4 > 0) {
+            linked_list.Remove(temp);
         }
     }
 
-    CHECK(l.Size() == 5);
+    CHECK(linked_list.Size() == 5);
     source.clear();
 
-    for (auto current = l.GetTail(); current; current = current->prev) {
-        source.push_back(current->value);
+    for (auto num : linked_list) {
+        source.push_back(num);
     }
 
-    const std::vector<int> expected = { 16, 12, 8, 4, 0 };
+    const std::vector<int> expected = { 0, 4, 8, 12, 16 };
     CHECK(source == expected);
 }
 
@@ -217,33 +215,94 @@ TEST_CASE("ArrayList<string>::Insert() & ArrayList<string>::Remove()") {
     CHECK(test_empty.Empty());
 }
 
-TEST_CASE("Test simple iterators of ArrayList<int> on some stl algorithms") {
+TEST_CASE("Test iterators on some stl algorithms") {
     std::vector<int> source = { -2, 6, 2, -31, 23, 65, 8743, 432, 65, 12, 7, 5 };
-    std::vector<int> copy_source(source.size());
-    Lists::ArrayList<int> array_list(source.size());
+    SUBCASE("ArrayListIterator") {
+        std::vector<int> copy_source(source.size());
+        Lists::ArrayList<int> array_list(source.size());
 
-    for (int i = 0; i < static_cast<int>(source.size()); ++i) {
-        array_list[i] = source[i];
+        for (int i = 0; i < static_cast<int>(source.size()); ++i) {
+            array_list[i] = source[i];
+        }
+
+        std::copy(array_list.begin(), array_list.end(), copy_source.begin());
+        CHECK(copy_source == source);
+        std::sort(array_list.begin(), array_list.end());
+        bool is_sorted = std::is_sorted(array_list.begin(), array_list.end());
+
+        CHECK(is_sorted);
+
+        auto it = std::find(array_list.begin(), array_list.end(), 432);
+        CHECK(*it == 432);
+
+        it = std::find(array_list.begin(), array_list.end(), -3034834);
+        CHECK(it == array_list.end());
+        std::fill(array_list.begin(), array_list.end(), 10);
+
+        CHECK(array_list.Size() == std::count(array_list.begin(), array_list.end(), 10));
+
+        auto equal_range_res = std::equal_range(array_list.begin(), array_list.end(), 10);
+        CHECK(equal_range_res.second - equal_range_res.first == std::count(array_list.begin(), array_list.end(), 10));
     }
 
-    std::copy(array_list.begin(), array_list.end(), copy_source.begin());
-    CHECK(copy_source == source);
-    std::sort(array_list.begin(), array_list.end());
-    bool is_sorted = std::is_sorted(array_list.begin(), array_list.end());
+    SUBCASE("LinkedListIterator") {
+        Lists::LinkedList<int> linked_list;
+        for (int i = 0; i < static_cast<int>(source.size()); ++i) {
+            linked_list.PushBack(source[i]);
+        }
+        std::vector<int> copy_source(source.size());
+        std::copy(linked_list.begin(), linked_list.end(), copy_source.begin());
 
-    CHECK(is_sorted);
+        auto iter = linked_list.begin();
 
-    auto it = std::find(array_list.begin(), array_list.end(), 432);
-    CHECK(*it == 432);
+        while (std::next(iter) != linked_list.end()) {
+            ++iter;
+        }
 
-    it = std::find(array_list.begin(), array_list.end(), -3034834);
-    CHECK(it == array_list.end());
-    std::fill(array_list.begin(), array_list.end(), 10);
 
-    CHECK(array_list.Size() == std::count(array_list.begin(), array_list.end(), 10));
+        CHECK(copy_source == source);
 
-    auto equal_range_res = std::equal_range(array_list.begin(), array_list.end(), 10);
-    CHECK(equal_range_res.second - equal_range_res.first == std::count(array_list.begin(), array_list.end(), 10));
+        {
+            Lists::LinkedList<int> sorted_list;
+            std::iota(sorted_list.begin(), sorted_list.end(), 0);
+            CHECK(std::is_sorted(sorted_list.begin(), sorted_list.end()));
+        }
+
+        auto it = std::find(linked_list.begin(), linked_list.end(), 432);
+        CHECK(*it == 432);
+
+        it = std::find(linked_list.begin(), linked_list.end(), -3034834);
+        CHECK(it == linked_list.end());
+
+        std::fill(linked_list.begin(), linked_list.end(), 10);
+
+        CHECK(linked_list.Size() == std::count(linked_list.begin(), linked_list.end(), 10));
+
+        {
+            Lists::LinkedList<int> replaced_list;
+            for (int i = 0; i < 40; ++i) {
+                replaced_list.PushBack(i);
+            }
+            auto predicate = [](int num) {
+                return num % 5 == 0;
+            };
+
+            std::replace_if(replaced_list.begin(), replaced_list.end(), predicate, 3);
+
+            CHECK(std::count_if(replaced_list.begin(), replaced_list.end(), predicate) == 0);
+        }
+        {
+            Lists::LinkedList<int> reversed_list;
+
+            for (int i = 0; i < 40; ++i) {
+                reversed_list.PushFront(i);
+            }
+
+            std::reverse(reversed_list.begin(), reversed_list.end());
+            CHECK(std::is_sorted(reversed_list.begin(), reversed_list.end()));
+        }
+
+    }
 }
 
 TEST_CASE("Graphs") {
