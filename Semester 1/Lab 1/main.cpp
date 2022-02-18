@@ -295,10 +295,9 @@ TEST_CASE("Test iterators on some stl algorithms") {
             Lists::LinkedList<int> reversed_list;
 
             for (int i = 0; i < 40; ++i) {
-                reversed_list.PushFront(i);
+                reversed_list.PushBack(i);
             }
 
-            std::reverse(reversed_list.begin(), reversed_list.end());
             CHECK(std::is_sorted(reversed_list.begin(), reversed_list.end()));
         }
 

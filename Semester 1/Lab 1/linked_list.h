@@ -91,16 +91,15 @@ namespace Lists {
 	private:
 		Node<T>* head_ = nullptr;
 		Node<T>* tail_ = nullptr;
-		Node<T>* sentinel_;
 	public:
-		LinkedList() : sentinel_(new Node<T>()){};
+		LinkedList() {};
 
 		void Insert(T to_insert, LinkedListIterator<T> pos) override {
 			if (!head_) {
 				return;
 			}
 
-			if (pos.ptr_ == sentinel_) {
+			if (!pos.ptr_) {
 				PushBack(to_insert);
 			}
 			else if (pos.ptr_ == head_) {
@@ -127,9 +126,6 @@ namespace Lists {
 			node_to_push->prev = tail_;
 			tail_ = node_to_push;
 
-			sentinel_->prev = tail_;
-			tail_->next = sentinel_;
-
 			++this->size_;
 		}
 
@@ -147,7 +143,7 @@ namespace Lists {
 		}
 
 		void Remove(LinkedListIterator<T> pos) override {
-			if (pos.ptr_ == sentinel_ || !head_ ) {
+			if (!pos.ptr_ || !head_ ) {
 				return;
 			}
 
@@ -155,14 +151,14 @@ namespace Lists {
 				pos.ptr_->prev->next = pos.ptr_->next;
 			}
 			else {
-				head_ = pos.ptr_->next != sentinel_ ? pos.ptr_->next : nullptr;
+				head_ =  pos.ptr_->next;
 			}
 
-			if (pos.ptr_->next && pos.ptr_->next != sentinel_) {
+			if (pos.ptr_->next) {
 				pos.ptr_->next->prev = pos.ptr_->prev;
 			}
 			else {
-				tail_ = pos.ptr_->next != sentinel_ ? pos.ptr_->prev : nullptr;
+				tail_ = pos.ptr_->prev;
 			}
 
 			delete pos.ptr_;
@@ -178,26 +174,25 @@ namespace Lists {
 		};
 
 		LinkedListIterator<T> begin() override {
-			return head_ ? LinkedListIterator<T>(head_) : end();
+			return LinkedListIterator<T>(head_);
 		}
 
 		LinkedListIterator<T> end() override {
-			return LinkedListIterator<T>(sentinel_);
+			return LinkedListIterator<T>();
 		}
 
 		const LinkedListIterator<T> begin() const override {
-			return head_ ? LinkedListIterator<T>(head_) : end();
+			return LinkedListIterator<T>(head_);
 		}
 
 		const LinkedListIterator<T> end() const override {
-			return LinkedListIterator<T>(sentinel_);
+			return LinkedListIterator<T>();
 		}
 
 		~LinkedList() {
 			while (head_) {
 				PopFront();
 			}
-			delete sentinel_;
 		}
 	};
 }
