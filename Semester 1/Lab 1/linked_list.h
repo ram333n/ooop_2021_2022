@@ -94,6 +94,20 @@ namespace Lists {
 	public:
 		LinkedList() {};
 
+		explicit LinkedList(size_t new_size, T value = T()){
+			this->size_ = new_size;
+			for (size_t i = 0; i < new_size; ++i) {			
+				PushBack(value);
+			}
+		}
+
+		LinkedList(LinkedListIterator<T> range_begin, LinkedListIterator<T> range_end) {
+			while (range_begin != range_end) {
+				PushBack(*range_begin++);
+				++this->size_;
+			}
+		}
+
 		void Insert(T to_insert, LinkedListIterator<T> pos) override {
 			if (!head_) {
 				return;
@@ -195,4 +209,6 @@ namespace Lists {
 			}
 		}
 	};
+
+
 }

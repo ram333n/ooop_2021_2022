@@ -122,6 +122,13 @@ namespace Lists {
 		size_t capacity_ = 0;
 	public:
 		ArrayList() {};
+		ArrayList(ArrayListIterator<T> range_begin, ArrayListIterator<T> range_end) {
+			this->size_ = capacity_ = range_end - range_begin;
+			data_ = new T[this->size_];
+			for (size_t i = 0; i < this->size_; ++i) {
+				data_[i] = *(range_begin + i);
+			}
+		}
 
 		explicit ArrayList(size_t new_size)
 			: data_(new T[new_size]),

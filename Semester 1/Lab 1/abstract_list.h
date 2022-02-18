@@ -8,10 +8,10 @@ namespace Lists {
 	public:
 		virtual ~AbstractList() = default;
 
-		bool Empty() const {
+		bool empty() const {
 			return size_ == 0;
 		}
-		size_t Size() const {
+		size_t size() const {
 			return size_;
 		}
 
