@@ -12,8 +12,8 @@
 
 TEST_CASE("Default linked list construct") {
     Lists::LinkedList<int> linked_list;
-    CHECK(linked_list.size() == 0);
-    CHECK(linked_list.empty());
+    CHECK(linked_list.Size() == 0);
+    CHECK(linked_list.Empty());
     CHECK(linked_list.begin() == linked_list.end());
 }
 
@@ -24,7 +24,7 @@ TEST_CASE("LinkedList<int>::PushBack()") {
     std::iota(source.begin(), source.end(), 0);
     Lists::LinkedList<int> linked_list;
 
-    CHECK(linked_list.empty());
+    CHECK(linked_list.Empty());
     for (int num : source) {
         linked_list.PushBack(num);
     }
@@ -35,7 +35,7 @@ TEST_CASE("LinkedList<int>::PushBack()") {
 
     CHECK(source == dest);
     CHECK(*linked_list.begin() == 0);
-    CHECK(linked_list.size() == 20);
+    CHECK(linked_list.Size() == 20);
 }
 
 TEST_CASE("LinkedList<int>::PushFront()") {
@@ -45,7 +45,7 @@ TEST_CASE("LinkedList<int>::PushFront()") {
         source.push_back(i);
         linked_list.PushFront(i);
     }
-    CHECK(linked_list.size() == 20);
+    CHECK(linked_list.Size() == 20);
     CHECK(*linked_list.begin() == 19);
     std::reverse(source.begin(), source.end());
 
@@ -64,14 +64,14 @@ TEST_CASE("LinkedList<int>::Insert()") {
         linked_list.PushBack(num);
     }
 
-    CHECK(linked_list.size() == 10);
+    CHECK(linked_list.Size() == 10);
     CHECK(*linked_list.begin() == 0);
     auto found_num = std::find(linked_list.begin(), linked_list.end(), 5);
     
     CHECK(*found_num == 5);
 
     linked_list.Insert(100, found_num);
-    CHECK(linked_list.size() == 11);
+    CHECK(linked_list.Size() == 11);
     auto source_it = std::find(source.begin(), source.end(), 5);
     source.insert(source_it, 100);
 
@@ -82,11 +82,11 @@ TEST_CASE("LinkedList<int>::Insert()") {
     CHECK(source == dest);
 
     linked_list.Insert(3000, linked_list.begin());
-    CHECK(linked_list.size() == 12);
+    CHECK(linked_list.Size() == 12);
     CHECK(*linked_list.begin() == 3000);
 
     linked_list.Insert(-3000, linked_list.end());
-    CHECK(linked_list.size() == 13);
+    CHECK(linked_list.Size() == 13);
 }
 
 TEST_CASE("LinkedList<int>::Remove()") {
@@ -98,7 +98,7 @@ TEST_CASE("LinkedList<int>::Remove()") {
 
     CHECK(++linked_list.begin() == linked_list.end());
     linked_list.PopBack();
-    CHECK(linked_list.empty());
+    CHECK(linked_list.Empty());
 
     std::vector<int> source(20);
     std::iota(source.begin(), source.end(), 0);
@@ -116,7 +116,7 @@ TEST_CASE("LinkedList<int>::Remove()") {
         }
     }
 
-    CHECK(linked_list.size() == 5);
+    CHECK(linked_list.Size() == 5);
     source.clear();
 
     for (auto num : linked_list) {
@@ -129,14 +129,14 @@ TEST_CASE("LinkedList<int>::Remove()") {
 
 TEST_CASE("ArrayList default construct") {
     Lists::ArrayList<int> array_list;
-    CHECK(array_list.size() == 0);
+    CHECK(array_list.Size() == 0);
     CHECK(array_list.Capacity() == 0);
     CHECK(array_list.end() == array_list.begin());
 }
 
 TEST_CASE("ArrayList construct") {
     Lists::ArrayList<int> array_list(5);
-    CHECK(array_list.size() == 5);
+    CHECK(array_list.Size() == 5);
     CHECK(array_list.Capacity() == 5);
 }
 
@@ -147,52 +147,52 @@ TEST_CASE("ArrayList<string>::PushBack()") {
     CHECK(array_list[0] == default_str);
 
     array_list.PushBack(default_str);
-    CHECK(array_list.size() == 2);
+    CHECK(array_list.Size() == 2);
     CHECK(array_list.Capacity() == 2);
 
     for (int i = 0; i < 2; ++i) {
         array_list.PushBack(default_str);
     }
 
-    CHECK(array_list.size() == 4);
+    CHECK(array_list.Size() == 4);
     CHECK(array_list.Capacity() == 4);
 
     array_list.PushBack(default_str);
 
-    CHECK(array_list.size() == 5);
+    CHECK(array_list.Size() == 5);
     CHECK(array_list.Capacity() == 8);
 }
 
 TEST_CASE("ArrayList<string>::Insert() & ArrayList<string>::Remove()") {
     Lists::ArrayList<std::string> array_list(5);
 
-    for (int i = 0; i < static_cast<int>(array_list.size()); ++i) {
+    for (int i = 0; i < static_cast<int>(array_list.Size()); ++i) {
         array_list[i] = std::string(100, 'a' + i);
     }
 
     array_list.Insert("x", array_list.begin());
-    CHECK(array_list.size() == 6);
+    CHECK(array_list.Size() == 6);
     CHECK(array_list.Capacity() == 10);
     CHECK(array_list[0] == "x");
 
-    for (int i = 1; i < static_cast<int>(array_list.size()); ++i) {
+    for (int i = 1; i < static_cast<int>(array_list.Size()); ++i) {
         CHECK(array_list[i] == std::string(100, 'a' + i - 1));
     }
 
     array_list.Insert("y", array_list.begin() + 3);
-    CHECK(array_list.size() == 7);
+    CHECK(array_list.Size() == 7);
     CHECK(array_list.Capacity() == 10);
     CHECK(array_list[3] == "y");
 
     array_list.Remove(array_list.begin() + 3);
-    CHECK(array_list.size() == 6);
+    CHECK(array_list.Size() == 6);
     CHECK(array_list.Capacity() == 10);
 
     array_list.Remove(array_list.begin());
-    CHECK(array_list.size() == 5);
+    CHECK(array_list.Size() == 5);
     CHECK(array_list.Capacity() == 10);
 
-    for (int i = 0; i < static_cast<int>(array_list.size()); ++i) {
+    for (int i = 0; i < static_cast<int>(array_list.Size()); ++i) {
         CHECK(array_list[i] == std::string(100, 'a' + i));
     }
 
@@ -200,19 +200,19 @@ TEST_CASE("ArrayList<string>::Insert() & ArrayList<string>::Remove()") {
     Lists::ArrayList<int>test_empty;
     test_empty.Insert(1, test_empty.begin());
 
-    CHECK(test_empty.size() == 1);
+    CHECK(test_empty.Size() == 1);
     CHECK(test_empty.Capacity() == 1);
     CHECK(test_empty[0] == 1);
 
     test_empty.Remove(test_empty.begin());
-    CHECK(test_empty.size() == 0);
+    CHECK(test_empty.Size() == 0);
     CHECK(test_empty.Capacity() == 1);
-    CHECK(test_empty.empty());
+    CHECK(test_empty.Empty());
 
     test_empty.Insert(-1, test_empty.begin() + 1000);
-    CHECK(test_empty.size() == 0);
+    CHECK(test_empty.Size() == 0);
     CHECK(test_empty.Capacity() == 1);
-    CHECK(test_empty.empty());
+    CHECK(test_empty.Empty());
 }
 
 TEST_CASE("Test iterators on some stl algorithms") {
@@ -239,7 +239,7 @@ TEST_CASE("Test iterators on some stl algorithms") {
         CHECK(it == array_list.end());
         std::fill(array_list.begin(), array_list.end(), 10);
 
-        CHECK(array_list.size() == std::count(array_list.begin(), array_list.end(), 10));
+        CHECK(array_list.Size() == std::count(array_list.begin(), array_list.end(), 10));
 
         auto equal_range_res = std::equal_range(array_list.begin(), array_list.end(), 10);
         CHECK(equal_range_res.second - equal_range_res.first == std::count(array_list.begin(), array_list.end(), 10));
@@ -276,7 +276,7 @@ TEST_CASE("Test iterators on some stl algorithms") {
 
         std::fill(linked_list.begin(), linked_list.end(), 10);
 
-        CHECK(linked_list.size() == std::count(linked_list.begin(), linked_list.end(), 10));
+        CHECK(linked_list.Size() == std::count(linked_list.begin(), linked_list.end(), 10));
 
         {
             Lists::LinkedList<int> replaced_list;
@@ -302,6 +302,27 @@ TEST_CASE("Test iterators on some stl algorithms") {
             CHECK(std::is_sorted(sorted_list.begin(), sorted_list.end()));
             std::copy(sorted_list.begin(), sorted_list.end(), copy_list.begin());
             CHECK(std::is_sorted(copy_list.begin(), copy_list.end()));
+        }
+
+        {
+            Lists::LinkedList<int> partitioned_list;
+
+            for (int i = 0; i < 40; ++i) {
+                partitioned_list.PushBack(i);
+            }
+
+            auto predicate = [](int num) {
+                return num % 5 == 0;
+            };
+
+            auto border = std::partition(partitioned_list.begin(), partitioned_list.end(), predicate);
+
+
+            for (auto it = partitioned_list.begin(); it != border; ++it) {
+                CHECK(predicate(*it));
+            }
+
+            CHECK(std::count_if(partitioned_list.begin(), partitioned_list.end(), predicate) == 8);
         }
 
     }
@@ -405,36 +426,36 @@ TEST_CASE("Graphs") {
 
 
 TEST_CASE("Test reflections") {
-    Point p_1 = { 1,1 };
-    Line l_1 = { 1,1,0 };
-    Point exp_p_1 = { -1,-1 };
+    Figures::Point p_1 = { 1,1 };
+    Figures::Line l_1 = { 1,1,0 };
+    Figures::Point exp_p_1 = { -1,-1 };
     CHECK(ReflectPoint(p_1, l_1) == exp_p_1);
 
-    Point p_2 = { 1,2 };
-    Line l_2 = { 1,-2,-2 };
-    Point exp_p_2 = { 3,-2 };
+    Figures::Point p_2 = { 1,2 };
+    Figures::Line l_2 = { 1,-2,-2 };
+    Figures::Point exp_p_2 = { 3,-2 };
 
     CHECK(ReflectPoint(p_2, l_2) == exp_p_2);
 
-    Point p_3 = { 1,2 };
-    Line l_3 = { 0,1,0 };
-    Point exp_p_3 = { 1,-2 };
+    Figures::Point p_3 = { 1,2 };
+    Figures::Line l_3 = { 0,1,0 };
+    Figures::Point exp_p_3 = { 1,-2 };
 
     CHECK(ReflectPoint(p_3, l_3) == exp_p_3);
 
-    Point p_4 = { 1,2 };
-    Line l_4 = { 1,0,0 };
-    Point exp_p_4 = { -1,2 };
+    Figures::Point p_4 = { 1,2 };
+    Figures::Line l_4 = { 1,0,0 };
+    Figures::Point exp_p_4 = { -1,2 };
 
     CHECK(ReflectPoint(p_4, l_4) == exp_p_4);
 
     //----------------------------------------
 
-    Line l_5 = { 1,1,0 };
-    Line r = { 1,0,0 };
-    Line exp = { -1,1,0 };
+    Figures::Line l_5 = { 1,1,0 };
+    Figures::Line r = { 1,0,0 };
+    Figures::Line exp = { -1,1,0 };
 
-    Line res = ReflectLine(l_5, r);
+    Figures::Line res = ReflectLine(l_5, r);
 
 
     CHECK(ReflectLine(l_5, r).GetA() == exp.GetA());
@@ -443,15 +464,16 @@ TEST_CASE("Test reflections") {
 }
 
 TEST_CASE("Tests for sorting algorithms") {
+    using namespace Sort;
     auto comparator = [](int lhs, int rhs) {
-            return lhs > rhs;
+        return lhs > rhs;
     };
-    std::vector<int> source = { 1,6,-2,-4,45,-3,2,1,5,7,56,876,1337,45,21,0,3};
+    std::vector<int> source = { 1,6,-2,-4,45,-3,2,1,5,7,56,876,1337,45,21,0,3 };
 
-    {
+    SUBCASE("Insertion sort") {
         Lists::ArrayList<int> arr_list(source.size());
         Lists::LinkedList<int> linked_list;
-        std::list<int> stl_list;
+        Lists::StlList<int> stl_list;
         for (size_t i = 0; i < source.size(); ++i) {
             arr_list[i] = source[i];
             linked_list.PushBack(source[i]);
@@ -467,10 +489,10 @@ TEST_CASE("Tests for sorting algorithms") {
         CHECK(std::is_sorted(stl_list.begin(), stl_list.end(), comparator));
 
     }
-    {
+    SUBCASE("Merge sort") {
         Lists::ArrayList<int> arr_list(source.size());
         Lists::LinkedList<int> linked_list;
-        std::list<int> stl_list;
+        Lists::StlList<int> stl_list;
         for (size_t i = 0; i < source.size(); ++i) {
             arr_list[i] = source[i];
             linked_list.PushBack(source[i]);
@@ -485,66 +507,23 @@ TEST_CASE("Tests for sorting algorithms") {
         CHECK(std::is_sorted(linked_list.begin(), linked_list.end(), comparator));
         CHECK(std::is_sorted(stl_list.begin(), stl_list.end(), comparator));
     }
+    SUBCASE("Quick sort") {
+        Lists::ArrayList<int> arr_list(source.size());
+        Lists::LinkedList<int> linked_list;
+        Lists::StlList<int> stl_list;
+        for (size_t i = 0; i < source.size(); ++i) {
+            arr_list[i] = source[i];
+            linked_list.PushBack(source[i]);
+            stl_list.push_back(source[i]);
+        }
 
+        QuickSort(linked_list.begin(), linked_list.end(), comparator);
+        QuickSort(arr_list.begin(), arr_list.end(), comparator);
+        QuickSort(stl_list.begin(), stl_list.end(), comparator);
+
+        CHECK(std::is_sorted(arr_list.begin(), arr_list.end(), comparator));
+        CHECK(std::is_sorted(linked_list.begin(), linked_list.end(), comparator));
+        CHECK(std::is_sorted(stl_list.begin(), stl_list.end(), comparator));
+    }
 }
-//    auto comparator = [](int lhs, int rhs) {
-//        return lhs > rhs;
-//    };
-//    std::vector<int> source = { 1,6,-2,-4,45,-3,2,1,5,7,56,876,1337,45,21,0 };
-//    ArrayList<int> arr_list(source.size());
-//    {
-//        LinkedList<int> linked_list;
-//        std::list<int> stl_list;
-//        for (size_t i = 0; i < source.size(); ++i) {
-//            arr_list[i] = source[i];
-//            linked_list.PushBack(source[i]);
-//            stl_list.push_back(source[i]);
-//        }
-//
-//        QuickSort(stl_list.begin(), stl_list.end(), comparator);
-//        QuickSort(arr_list, 0, arr_list.Size() - 1, comparator);
-//        QuickSort(linked_list.GetHead(), linked_list.GetTail(), comparator);
-//
-//        CHECK(std::is_sorted(stl_list.begin(), stl_list.end(), comparator));
-//        CHECK(std::is_sorted(arr_list.begin(), arr_list.end(), comparator));
-//        CHECK(IsSorted(linked_list,comparator));
-//    }
-//
-//    {
-//        LinkedList<int> linked_list;
-//        std::list<int> stl_list;
-//        for (size_t i = 0; i < source.size(); ++i) {
-//            arr_list[i] = source[i];
-//            linked_list.PushBack(source[i]);
-//            stl_list.push_back(source[i]);
-//        }
-//
-//        MergeSort(stl_list.begin(), stl_list.end(), comparator);
-//        MergeSort(linked_list, comparator);
-//        MergeSort(arr_list.begin(), arr_list.end(), comparator);
-//
-//
-//
-//        CHECK(std::is_sorted(stl_list.begin(), stl_list.end(), comparator));
-//        CHECK(std::is_sorted(arr_list.begin(), arr_list.end(), comparator));
-//        CHECK(IsSorted(linked_list, comparator));
-//    }
-//
-//    {
-//        LinkedList<int> linked_list;
-//        std::list<int> stl_list;
-//        for (size_t i = 0; i < source.size(); ++i) {
-//            arr_list[i] = source[i];
-//            linked_list.PushBack(source[i]);
-//            stl_list.push_back(source[i]);
-//        }
-//
-//        InsertionSort(linked_list, comparator);
-//        InsertionSort(arr_list, comparator);
-//
-//        CHECK(std::is_sorted(arr_list.begin(), arr_list.end(), comparator));
-//        CHECK(IsSorted(linked_list, comparator));
-//    }      
-//
-//}
 
