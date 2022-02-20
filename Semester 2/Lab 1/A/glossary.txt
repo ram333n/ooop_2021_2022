@@ -1,0 +1,12 @@
+LinkedList         - container, which implemented as a doubly-linked list
+ArrayList 	   - container, that encapsulates dynamic size arrays
+Insert 		   - operation of adding element to the list
+Front element      - first element in the list
+Back element 	   - last element in the list
+Iterator 	   - object, that enables to traverse a container and get access to the elements of the list
+AdjacencyList 	   - graph, represented as map(vertices) of lists(neighbours of accordant vertex)
+AdjacencyMatrix    - graph, represented as matrix.  The elements of the matrix indicate whether pairs of vertices are adjacent or not in the graph.
+AbstractList 	   - abstract class, that represents the general interface of LinkedList and ArrayList
+ArrayListIterator  - iterator for ArrayList
+LinkedListIterator - iterator for LinkedList
+Node  		   - node of doubly-linked list 
