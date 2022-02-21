@@ -12,4 +12,4 @@ Lab 3 :
 Simple doc scanner(OpenCV and tesseract OCR)
 # Semester 2
 Lab 1 :
-UML diagrams for Lab 1 for first semester
+UML diagrams for Lab 1 from first semester
