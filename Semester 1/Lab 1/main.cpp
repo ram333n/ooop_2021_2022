@@ -175,7 +175,7 @@ TEST_CASE("ArrayList<string>::Insert() & ArrayList<string>::Remove()") {
     CHECK(array_list.Capacity() == 10);
     CHECK(array_list[0] == "x");
 
-    for (int i = 1; i < static_cast<int>(array_list.Size()); ++i) {
+    for (size_t i = 1; i < array_list.Size(); ++i) {
         CHECK(array_list[i] == std::string(100, 'a' + i - 1));
     }
 

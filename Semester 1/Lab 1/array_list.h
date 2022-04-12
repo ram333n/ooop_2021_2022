@@ -189,7 +189,9 @@ namespace Lists {
 		};
 
 		void PopBack() override {
-			Remove(end() - 1);
+			if (size_ > 0) {
+				Remove(end() - 1);
+			}
 		}
 
 		ArrayListIterator<T> begin() override {
