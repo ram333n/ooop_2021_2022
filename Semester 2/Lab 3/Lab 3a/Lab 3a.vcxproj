@@ -140,9 +140,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="doctest.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="doctest.h" />
     <ClInclude Include="matrix.h" />
     <ClInclude Include="profile.h" />
   </ItemGroup>

@@ -18,9 +18,15 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="doctest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="profile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="doctest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="matrix.h">
