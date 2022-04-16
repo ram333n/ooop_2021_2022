@@ -15,13 +15,14 @@ namespace Matrix {
 		Matrix(Matrix&& m) noexcept;
 		Matrix(const std::vector<std::vector<T>>& data_);
 		Matrix(std::vector<std::vector<T>>&& data_) noexcept;
-		//Ctor from two iterators
 
 		T& At(size_t row, size_t column);
 		const T& At(size_t row, size_t column) const;
 
 		size_t Rows() const;
 		size_t Columns() const;
+
+		void Resize(size_t rows, size_t columns);
 
 		bool Empty() const;
 
@@ -57,7 +58,7 @@ namespace Matrix {
 
 		data.resize(rows_count);
 		for (auto& row : data) {
-			row.resize(columns_count);
+			row.resize(columns_count, 0);
 		}
 	}
 
@@ -122,6 +123,22 @@ namespace Matrix {
 	}
 
 	template<typename T>
+	void Matrix<T>::Resize(size_t rows, size_t columns) {
+		if (rows == 0 || columns == 0) {
+			return;
+		}
+
+		data.resize(rows);
+
+		for (auto& row : data) {
+			row.resize(columns);
+		}
+
+		rows_count = rows;
+		columns_count = columns;
+	}
+
+	template<typename T>
 	bool Matrix<T>::Empty() const {
 		return data.empty();
 	}
@@ -147,24 +164,12 @@ namespace Matrix {
 
 	template<typename T>
 	bool operator==(const Matrix<T>& lhs, const Matrix<T>& rhs) {
-		if (lhs.rows_count != rhs.rows_count || lhs.columns_count != rhs.columns_count) {
-			return false;
-		}
-
-		for (size_t i = 0; i < lhs.rows_count; ++i) {
-			for (size_t j = 0; j < lhs.columns_count; ++j) {
-				if (lhs.At(i, j) != rhs.At(i, j)) {
-					return false;
-				}
-			}
-		}
-
-		return true;
+		return lhs.data == rhs.data;
 	}
 
 	template<typename T>
 	bool operator!=(const Matrix<T>& lhs, const Matrix<T>& rhs) {
-		return !(lhs == rhs);
+		return lhs.data != rhs.data;
 	}
 
 	template<typename T>
@@ -221,15 +226,121 @@ namespace Matrix {
 
 		Matrix<T> result(lhs.Rows(), rhs.Columns());
 
-		for (size_t i = 0; i < result.Rows(); ++i) {
-			for (size_t j = 0; j < result.Columns(); ++j) {
+		for (size_t i = 0; i < lhs.Rows(); ++i) {
+			for (size_t j = 0; j < rhs.Columns(); ++j) {
 				result.At(i,j) = 0;
-				for (size_t k = 0; k < lhs.Columns(); ++k) {
+				for (size_t k = 0; k < rhs.Rows(); ++k) {
 					result.At(i, j) += lhs.At(i, k) * rhs.At(k, j);
 				}
 			}
 		}
 
+		return result;
+	}
+
+	template<typename T>
+	void Split(const Matrix<T>& source, Matrix<T>& A_11, Matrix<T>& A_12, Matrix<T>& A_21, Matrix<T>& A_22) {
+		size_t half_size = source.Rows() / 2;
+
+		for (size_t i = 0; i < half_size; ++i) {
+			for (size_t j = 0; j < half_size; ++j) {
+				A_11.At(i, j) = source.At(i, j);
+				A_12.At(i, j) = source.At(i, j + half_size);
+				A_21.At(i, j) = source.At(i + half_size, j);
+				A_22.At(i, j) = source.At(i + half_size, j + half_size);
+			}
+		}
+	}
+
+	template<typename T>
+	void Merge(Matrix<T>& dest, const Matrix<T>& A_11, const Matrix<T>& A_12, const Matrix<T>& A_21, const Matrix<T>& A_22) {
+		size_t half_size = A_11.Rows();
+
+		for (size_t i = 0; i < half_size; ++i) {
+			for (size_t j = 0; j < half_size; ++j) {
+				dest.At(i, j) = A_11.At(i, j);
+				dest.At(i, j + half_size) = A_12.At(i, j);
+				dest.At(i + half_size, j) = A_21.At(i, j);
+				dest.At(i + half_size, j + half_size) = A_22.At(i, j);
+			}
+		}
+	}
+
+	template<typename T>
+	Matrix<T> StrassenSingleThread(const Matrix<T>& lhs, const Matrix<T>& rhs) {
+		if (lhs.Rows() < 4) {
+			return NaiveMultiplication(lhs, rhs);
+		}
+
+		size_t half_size = lhs.Rows() / 2;
+
+		Matrix<T> A_11(half_size, half_size),
+				  A_12(half_size, half_size),
+				  A_21(half_size, half_size),
+				  A_22(half_size, half_size),
+				  B_11(half_size, half_size),
+				  B_12(half_size, half_size),
+				  B_21(half_size, half_size),
+				  B_22(half_size, half_size);
+
+		Split(lhs, A_11, A_12, A_21, A_22);
+		Split(rhs, B_11, B_12, B_21, B_22);
+
+		Matrix<T> M_1 = StrassenSingleThread(A_11 + A_22, B_11 + B_22);
+		Matrix<T> M_2 = StrassenSingleThread(A_21 + A_22, B_11);
+		Matrix<T> M_3 = StrassenSingleThread(A_11, B_12 - B_22);
+		Matrix<T> M_4 = StrassenSingleThread(A_22, B_21 - B_11);
+		Matrix<T> M_5 = StrassenSingleThread(A_11 + A_12, B_22);
+		Matrix<T> M_6 = StrassenSingleThread(A_21 - A_11, B_11 + B_12);
+		Matrix<T> M_7 = StrassenSingleThread(A_12 - A_22, B_21 + B_22);
+
+		Matrix<T> C_11 = M_1 + M_4 - M_5 + M_7;
+		Matrix<T> C_12 = M_3 + M_5;
+		Matrix<T> C_21 = M_2 + M_4;
+		Matrix<T> C_22 = M_1 - M_2 + M_3 + M_6;
+
+		Matrix<T> result(lhs.Rows(), rhs.Columns());
+		Merge(result, C_11, C_12, C_21, C_22);
+		
+		return result;
+	}
+
+	template<typename T>
+	Matrix<T> StrassenAlgorithm(const Matrix<T>& lhs, const Matrix<T>& rhs, bool multithreaded = false) {
+		if (lhs.Columns() != rhs.Rows() || lhs.Empty() || rhs.Empty()) {
+			throw std::invalid_argument("Matrices have wrong dimensions");
+		}
+
+		size_t upper_limit = std::max({ lhs.Rows(), lhs.Columns(), rhs.Rows(), rhs.Columns() });
+		size_t dimension = 1;
+
+		while (dimension < upper_limit) {
+			dimension *= 2;
+		}
+
+		Matrix<T> new_lhs(dimension, dimension), new_rhs(dimension, dimension);
+		for (size_t i = 0; i < lhs.Rows(); ++i) {
+			for (size_t j = 0; j < lhs.Columns(); ++j) {
+				new_lhs.At(i, j) = lhs.At(i, j);
+			}
+		}
+
+		for (size_t i = 0; i < rhs.Rows(); ++i) {
+			for (size_t j = 0; j < rhs.Columns(); ++j) {
+				new_rhs.At(i, j) = rhs.At(i, j);
+			}
+		}
+
+		Matrix<T> result;
+
+
+		if (multithreaded) {
+			//TODO : Multithreaded version
+		}
+		else {
+			result = StrassenSingleThread(new_lhs, new_rhs);
+		}
+		result.Resize(lhs.Rows(), rhs.Columns());
 		return result;
 	}
 
