@@ -213,4 +213,24 @@ namespace Matrix {
 		return result;
 	}
 
+	template<typename T>
+	[[nodiscard]] Matrix<T> NaiveMultiplication(const Matrix<T>& lhs, const Matrix<T>& rhs) {
+		if (lhs.Columns() != rhs.Rows() || lhs.Empty() || rhs.Empty()) {
+			throw std::invalid_argument("Matrices have wrong dimensions");
+		}
+
+		Matrix<T> result(lhs.Rows(), rhs.Columns());
+
+		for (size_t i = 0; i < result.Rows(); ++i) {
+			for (size_t j = 0; j < result.Columns(); ++j) {
+				result.At(i,j) = 0;
+				for (size_t k = 0; k < lhs.Columns(); ++k) {
+					result.At(i, j) += lhs.At(i, k) * rhs.At(k, j);
+				}
+			}
+		}
+
+		return result;
+	}
+
 }

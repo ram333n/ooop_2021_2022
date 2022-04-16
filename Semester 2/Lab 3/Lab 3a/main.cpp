@@ -6,7 +6,7 @@
 #include "profile.h"
 #include "doctest.h"
 
-TEST_CASE("Matrix") {
+TEST_CASE("Template class Matrix") {
 	SUBCASE("Default contruct") {
 		Matrix::Matrix<int> m;
 		CHECK(m.Empty());
@@ -93,8 +93,52 @@ TEST_CASE("Matrix") {
 
 }
 
+TEST_CASE("Matrix multiplication") {
+	Matrix::Matrix<int> lhs_1({ {1,2,3} }),
+						rhs_1({ {2},{3},{4} }),
+						expected_1({ {20} });
+
+	Matrix::Matrix<int> lhs_2({ {1,2,3},{4,5,6} }),
+						rhs_2({ {7,8},{9,10},{11,12} }),
+						expected_2({ {58,64},{139, 154} });
+
+	Matrix::Matrix<int> lhs_3({ {1,2,-1} , { 3,2,0 },{-4,0,2} }),
+						rhs_3({ {3,4,2},{0,1,0},{-2,0,1} }),
+						expected_3({ {5,6,1},{9,14,6 },{-16,-16,-6} });
+
+	Matrix::Matrix<int> lhs_4({ { 1,2 }, { -3,4 } }),
+						rhs_4({ { 1,0 }, { 0,1 } }),
+						expected_4({ { 1,2 }, { -3,4 } });
+
+	Matrix::Matrix<int> lhs_5;
+
+	SUBCASE("Naive multiplication") {
+		auto res_1 = Matrix::NaiveMultiplication(lhs_1, rhs_1);
+		auto res_2 = Matrix::NaiveMultiplication(lhs_2, rhs_2);
+		auto res_3 = Matrix::NaiveMultiplication(lhs_3, rhs_3);
+		auto res_4 = Matrix::NaiveMultiplication(lhs_4, rhs_4);
+
+		CHECK(res_1 == expected_1);
+		CHECK(res_2 == expected_2);
+		CHECK(res_3 == expected_3);
+		CHECK(res_4 == expected_4);
+
+		try {
+			auto t = Matrix::NaiveMultiplication(lhs_5, rhs_1);
+			CHECK(false);
+		} catch (const std::invalid_argument&) {}
+
+		try {
+			auto t = Matrix::NaiveMultiplication(lhs_1, lhs_2);
+			CHECK(false);
+		}
+		catch (const std::invalid_argument&) {}
+	}
+}
+
 
 int main() {
+
 	doctest::Context runner;
 	runner.run();
 }
