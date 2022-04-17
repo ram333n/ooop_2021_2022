@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <type_traits>
+#include <future>
 
 namespace Matrix {
 	template<typename T>
@@ -124,7 +125,7 @@ namespace Matrix {
 
 	template<typename T>
 	void Matrix<T>::Resize(size_t rows, size_t columns) {
-		if (rows == 0 || columns == 0) {
+		if (rows == 0 || columns == 0||(rows == rows_count && columns == columns_count)) {
 			return;
 		}
 
@@ -267,8 +268,8 @@ namespace Matrix {
 	}
 
 	template<typename T>
-	Matrix<T> StrassenSingleThread(const Matrix<T>& lhs, const Matrix<T>& rhs) {
-		if (lhs.Rows() < 4) {
+	Matrix<T> StrassenSingleThread(const Matrix<T>& lhs, const Matrix<T>& rhs, size_t lower_border = 8) {
+		if (lhs.Rows() < lower_border) {
 			return NaiveMultiplication(lhs, rhs);
 		}
 
@@ -286,62 +287,122 @@ namespace Matrix {
 		Split(lhs, A_11, A_12, A_21, A_22);
 		Split(rhs, B_11, B_12, B_21, B_22);
 
-		Matrix<T> M_1 = StrassenSingleThread(A_11 + A_22, B_11 + B_22);
-		Matrix<T> M_2 = StrassenSingleThread(A_21 + A_22, B_11);
-		Matrix<T> M_3 = StrassenSingleThread(A_11, B_12 - B_22);
-		Matrix<T> M_4 = StrassenSingleThread(A_22, B_21 - B_11);
-		Matrix<T> M_5 = StrassenSingleThread(A_11 + A_12, B_22);
-		Matrix<T> M_6 = StrassenSingleThread(A_21 - A_11, B_11 + B_12);
-		Matrix<T> M_7 = StrassenSingleThread(A_12 - A_22, B_21 + B_22);
-
-		Matrix<T> C_11 = M_1 + M_4 - M_5 + M_7;
-		Matrix<T> C_12 = M_3 + M_5;
-		Matrix<T> C_21 = M_2 + M_4;
-		Matrix<T> C_22 = M_1 - M_2 + M_3 + M_6;
+		Matrix<T> M_1 = StrassenSingleThread(A_11 + A_22, B_11 + B_22, lower_border);
+		Matrix<T> M_2 = StrassenSingleThread(A_21 + A_22, B_11, lower_border);
+		Matrix<T> M_3 = StrassenSingleThread(A_11, B_12 - B_22, lower_border);
+		Matrix<T> M_4 = StrassenSingleThread(A_22, B_21 - B_11, lower_border);
+		Matrix<T> M_5 = StrassenSingleThread(A_11 + A_12, B_22, lower_border);
+		Matrix<T> M_6 = StrassenSingleThread(A_21 - A_11, B_11 + B_12, lower_border);
+		Matrix<T> M_7 = StrassenSingleThread(A_12 - A_22, B_21 + B_22, lower_border);
 
 		Matrix<T> result(lhs.Rows(), rhs.Columns());
-		Merge(result, C_11, C_12, C_21, C_22);
-		
+		Merge(result, M_1 + M_4 - M_5 + M_7,
+					  M_3 + M_5,
+					  M_2 + M_4,
+					  M_1 - M_2 + M_3 + M_6);
+
 		return result;
 	}
 
 	template<typename T>
-	Matrix<T> StrassenAlgorithm(const Matrix<T>& lhs, const Matrix<T>& rhs, bool multithreaded = false) {
+	Matrix<T> StrassenMultiThread(const Matrix<T>& lhs, const Matrix<T>& rhs, size_t lower_border = 8) {
+		if (lhs.Rows() < lower_border) {
+			return NaiveMultiplication(lhs, rhs);
+		}
+
+		size_t half_size = lhs.Rows() / 2;
+
+		Matrix<T> A_11(half_size, half_size),
+				  A_12(half_size, half_size),
+				  A_21(half_size, half_size),
+				  A_22(half_size, half_size),
+				  B_11(half_size, half_size),
+				  B_12(half_size, half_size),
+				  B_21(half_size, half_size),
+				  B_22(half_size, half_size);
+
+		Split(lhs, A_11, A_12, A_21, A_22);
+		Split(rhs, B_11, B_12, B_21, B_22);
+
+		std::future<Matrix<T>> M_1_future = std::async(std::launch::async, StrassenMultiThread<T>, A_11 + A_22, B_11 + B_22, lower_border);
+		std::future<Matrix<T>> M_2_future = std::async(std::launch::async, StrassenMultiThread<T>, A_21 + A_22, B_11, lower_border);
+		std::future<Matrix<T>> M_3_future = std::async(std::launch::async, StrassenMultiThread<T>, A_11, B_12 - B_22, lower_border);
+
+		M_1_future.wait();
+		M_2_future.wait();
+		M_3_future.wait();
+
+		Matrix<T> M_1 = M_1_future.get();
+		Matrix<T> M_2 = M_2_future.get();
+		Matrix<T> M_3 = M_3_future.get();
+		Matrix<T> M_4 = StrassenMultiThread(A_22, B_21 - B_11, lower_border);
+		Matrix<T> M_5 = StrassenMultiThread(A_11 + A_12, B_22, lower_border);
+		Matrix<T> M_6 = StrassenMultiThread(A_21 - A_11, B_11 + B_12, lower_border);
+		Matrix<T> M_7 = StrassenMultiThread(A_12 - A_22, B_21 + B_22, lower_border);
+
+
+		Matrix<T> result(lhs.Rows(), rhs.Columns());
+		Merge(result, M_1 + M_4 - M_5 + M_7,
+					  M_3 + M_5,
+				      M_2 + M_4,
+					  M_1 - M_2 + M_3 + M_6);
+
+		return result;
+	}
+
+	template<typename T>
+	Matrix<T> StrassenAlgorithm(const Matrix<T>& lhs, const Matrix<T>& rhs, size_t lower_border = 8, bool multithreaded = false) {
 		if (lhs.Columns() != rhs.Rows() || lhs.Empty() || rhs.Empty()) {
 			throw std::invalid_argument("Matrices have wrong dimensions");
 		}
 
-		size_t upper_limit = std::max({ lhs.Rows(), lhs.Columns(), rhs.Rows(), rhs.Columns() });
-		size_t dimension = 1;
+		size_t temp = lhs.Rows();
 
-		while (dimension < upper_limit) {
-			dimension *= 2;
+		while (!(temp & 1)) {
+			temp = temp >> 1;
 		}
 
-		Matrix<T> new_lhs(dimension, dimension), new_rhs(dimension, dimension);
-		for (size_t i = 0; i < lhs.Rows(); ++i) {
-			for (size_t j = 0; j < lhs.Columns(); ++j) {
-				new_lhs.At(i, j) = lhs.At(i, j);
-			}
-		}
-
-		for (size_t i = 0; i < rhs.Rows(); ++i) {
-			for (size_t j = 0; j < rhs.Columns(); ++j) {
-				new_rhs.At(i, j) = rhs.At(i, j);
-			}
-		}
+		bool is_power_of_two_sqr_matrix = (temp == 1) && (lhs.Rows() == lhs.Columns());
 
 		Matrix<T> result;
-
-
-		if (multithreaded) {
-			//TODO : Multithreaded version
+		if (is_power_of_two_sqr_matrix) {
+			if (multithreaded) {
+				result = StrassenMultiThread(lhs, rhs, lower_border);
+			}
+			else {
+				result = StrassenSingleThread(lhs, rhs, lower_border);
+			}
 		}
 		else {
-			result = StrassenSingleThread(new_lhs, new_rhs);
+			size_t upper_border = std::max({ lhs.Rows(), lhs.Columns(), rhs.Rows(), rhs.Columns() });
+			size_t dimension = 1;
+
+			while (dimension < upper_border) {
+				dimension *= 2;
+			}
+
+			Matrix<T> new_lhs(dimension, dimension), new_rhs(dimension, dimension);
+			for (size_t i = 0; i < lhs.Rows(); ++i) {
+				for (size_t j = 0; j < lhs.Columns(); ++j) {
+					new_lhs.At(i, j) = lhs.At(i, j);
+				}
+			}
+
+			for (size_t i = 0; i < rhs.Rows(); ++i) {
+				for (size_t j = 0; j < rhs.Columns(); ++j) {
+					new_rhs.At(i, j) = rhs.At(i, j);
+				}
+			}
+
+			if (multithreaded) {
+				result = StrassenMultiThread(new_lhs, new_rhs, lower_border);
+			}
+			else {
+				result = StrassenSingleThread(new_lhs, new_rhs, lower_border);
+			}
 		}
+
 		result.Resize(lhs.Rows(), rhs.Columns());
 		return result;
 	}
-
 }

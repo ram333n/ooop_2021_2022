@@ -142,10 +142,12 @@
   <ItemGroup>
     <ClCompile Include="doctest.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="tests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="doctest.h" />
     <ClInclude Include="matrix.h" />
+    <ClInclude Include="matrix_generator.h" />
     <ClInclude Include="profile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
