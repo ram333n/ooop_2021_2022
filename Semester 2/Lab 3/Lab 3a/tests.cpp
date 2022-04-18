@@ -56,6 +56,10 @@ TEST_CASE("Template class Matrix") {
 		Matrix::Matrix<int> m_5(3, 4);
 		CHECK(m_5 != m_3);
 
+		m_5 = std::move(m_5);
+
+		CHECK(m_5.Rows() == 3);
+
 	}
 
 	SUBCASE("operators + and -, resize") {
@@ -174,7 +178,7 @@ TEST_CASE("Matrix multiplication") {
 		catch (const std::invalid_argument&) {}
 	}
 
-	SUBCASE("Strassen single threaded") {
+	SUBCASE("Strassen single-threaded") {
 		auto res_1 = Matrix::StrassenAlgorithm(lhs_1, rhs_1, 4);
 		auto res_2 = Matrix::StrassenAlgorithm(lhs_2, rhs_2, 4);
 		auto res_3 = Matrix::StrassenAlgorithm(lhs_3, rhs_3, 4);
@@ -200,7 +204,7 @@ TEST_CASE("Matrix multiplication") {
 		catch (const std::invalid_argument&) {}
 	}
 
-	SUBCASE("Strassen multi threaded") {
+	SUBCASE("Strassen multi-threaded") {
 		auto res_1 = Matrix::StrassenAlgorithm(lhs_1, rhs_1, 4, true);
 		auto res_2 = Matrix::StrassenAlgorithm(lhs_2, rhs_2, 4, true);
 		auto res_3 = Matrix::StrassenAlgorithm(lhs_3, rhs_3, 4, true);

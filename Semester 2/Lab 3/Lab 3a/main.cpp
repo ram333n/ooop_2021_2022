@@ -5,13 +5,9 @@
 #include "profile.h"
 #include "doctest.h"
 
-void Benchmark() {
-	std::cout << "Enter max dimension of matrix\n";
-	size_t max_dimension = 0;
-	std::cin >> max_dimension;
+void MultiplicationBenchmark() {
 	Matrix::MatrixGenerator gen;
-
-	for (size_t i = 16; i <= max_dimension; i *= 2) {
+	for (size_t i = 16; i <= 2048; i *= 2) {
 		Matrix::Matrix<int> naive, sth_strassen, mth_strassen;
 
 		Matrix::Matrix<int> lhs = gen(i, i);
@@ -25,26 +21,37 @@ void Benchmark() {
 		}
 
 		{
-			LOG_DURATION("Single threaded Strassen");
+			LOG_DURATION("Single-threaded Strassen");
 			sth_strassen = Matrix::StrassenAlgorithm(lhs, rhs, 64);
 		}
 
 		{
-			LOG_DURATION("Multi threaded Strassen");
+			LOG_DURATION("Multi-threaded Strassen");
 			mth_strassen = Matrix::StrassenAlgorithm(lhs, rhs, 64, true);
 		}
 
-		bool is_correct = (naive == sth_strassen) && (naive == mth_strassen);
-		if (!is_correct) {
+		if (naive != sth_strassen || naive != mth_strassen) {
 			throw std::runtime_error("Unexpected result");
 		}
 	}
 }
 
-
 int main() {
-	doctest::Context runner;
-	runner.run();
-
-	Benchmark();
+	char command;
+	do {
+		std::cout << "[1] Run tests\n"
+				  << "[2] Benchmark\n"
+				  << "[3] Exit\n\n";
+		std::cin >> command;
+		switch (command) {
+			case '1': {
+				doctest::Context context;
+				context.run();
+				break;
+			}
+			case '2': 
+				MultiplicationBenchmark();
+		}
+	} while (command != '3');
 }
+

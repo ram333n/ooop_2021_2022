@@ -6,7 +6,7 @@
 namespace Matrix {
 	class MatrixGenerator {
 	public:
-		MatrixGenerator() : dist{0, 100} {}
+		MatrixGenerator() : dist{ 0, 100 } {}
 		MatrixGenerator(int range_begin, int range_end) : dist{ range_begin, range_end } {}
 
 		[[nodiscard]] Matrix<int> operator()(size_t rows, size_t columns) {

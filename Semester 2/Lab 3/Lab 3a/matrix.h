@@ -155,10 +155,12 @@ namespace Matrix {
 
 	template<typename T>
 	Matrix<T>& Matrix<T>::operator=(Matrix<T>&& rhs) noexcept {
-		rows_count = std::move(rhs.rows_count);
-		columns_count = std::move(rhs.columns_count);
-		data = std::move(rhs.data);
-		rhs.rows_count = rhs.columns_count = 0;
+		if (this != &rhs) {
+			rows_count = rhs.rows_count;
+			columns_count = rhs.columns_count;
+			data = std::move(rhs.data);
+			rhs.rows_count = rhs.columns_count = 0;
+		}
 
 		return *this;
 	}
