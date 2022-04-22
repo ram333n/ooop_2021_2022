@@ -13,3 +13,10 @@ Simple doc scanner(OpenCV and tesseract OCR)
 # Semester 2
 Lab 1 :
 UML diagrams for Lab 1 from first semester
+
+Lab 2 :
+TBD
+
+Lab 3a :
+Strassen algorithm for matrix multiplication
+

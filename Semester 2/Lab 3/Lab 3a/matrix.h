@@ -20,8 +20,8 @@ namespace Matrix {
 		T& At(size_t row, size_t column);
 		const T& At(size_t row, size_t column) const;
 
-		size_t Rows() const;
-		size_t Columns() const;
+		[[nodiscard]] size_t Rows() const;
+		[[nodiscard]] size_t Columns() const;
 
 		void Resize(size_t rows, size_t columns);
 
@@ -72,8 +72,8 @@ namespace Matrix {
 
 	template<typename T>
 	Matrix<T>::Matrix(Matrix&& m) noexcept :
-		rows_count(std::move(m.rows_count)),
-		columns_count(std::move(m.columns_count)),
+		rows_count(m.rows_count),
+		columns_count(m.columns_count),
 		data(std::move(m.data)) 
 	{
 		m.rows_count = m.columns_count = 0;
@@ -114,12 +114,12 @@ namespace Matrix {
 	}
 
 	template<typename T>
-	size_t Matrix<T>::Rows() const {
+	[[nodiscard]] size_t Matrix<T>::Rows() const {
 		return rows_count;
 	}
 
 	template<typename T>
-	size_t Matrix<T>::Columns() const {
+	[[nodiscard]] size_t Matrix<T>::Columns() const {
 		return columns_count;
 	}
 
