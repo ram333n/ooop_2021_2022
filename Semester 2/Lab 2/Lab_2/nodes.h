@@ -1,5 +1,8 @@
 #pragma once
+
+#include "enums.h"
 #include <memory>
+
 
 template<typename T>
 struct BaseNode {
@@ -12,11 +15,6 @@ struct BaseNode {
 template<typename T>
 struct ListNode : public BaseNode<T> {
     std::shared_ptr<ListNode<T>> _next = nullptr;
-};
-
-enum class Color {
-    Red,
-    Black
 };
 
 template<typename T>
@@ -42,8 +40,3 @@ using BinaryTreeNodePtr = std::shared_ptr<BinaryTreeNode<T>>;
 
 template<typename T>
 using RBTreeNodePtr = std::shared_ptr<RBTreeNode<T>>;
-
-
-
-
-

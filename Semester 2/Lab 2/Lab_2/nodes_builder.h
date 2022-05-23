@@ -2,7 +2,16 @@
 #include "nodes.h"
 
 template<typename T>
-class ListNodeBuilder {
+class IBaseNodeBuilder {
+public:
+    virtual IBaseNodeBuilder& SetValue(T value) = 0;
+    virtual void Reset() = 0;
+    virtual ~IBaseNodeBuilder() = default;
+};
+
+
+template<typename T>
+class ListNodeBuilder : public IBaseNodeBuilder<T> {
 private:
     ListNodePtr<T> to_build;
 public:
@@ -10,7 +19,7 @@ public:
         Reset();
     }
 
-    ListNodeBuilder<T>& SetValue(T value) {
+    ListNodeBuilder<T>& SetValue(T value) override {
         to_build->_value = std::move(value);
         return *this;
     }
@@ -20,7 +29,7 @@ public:
         return *this;
     }
 
-    void Reset() {
+    void Reset() override {
         to_build = std::make_shared<ListNode<T>>();
     }
 
@@ -33,7 +42,7 @@ public:
 
 
 template<typename T>
-class BinaryTreeNodeBuilder {
+class BinaryTreeNodeBuilder : public IBaseNodeBuilder<T> {
 private:
     BinaryTreeNodePtr<T> to_build;
 public:
@@ -41,7 +50,7 @@ public:
         Reset();
     }
 
-    BinaryTreeNodeBuilder<T>& SetValue(T value) {
+    BinaryTreeNodeBuilder<T>& SetValue(T value) override {
         this->to_build->_value = std::move(value);
         return *this;
     }
@@ -61,7 +70,7 @@ public:
         return *this;
     }
 
-    void Reset() {
+    void Reset() override {
         to_build = std::make_shared<BinaryTreeNode<T>>();
     }
 
@@ -73,7 +82,7 @@ public:
 };
 
 template<typename T>
-class RBTreeNodeBuilder {
+class RBTreeNodeBuilder : public IBaseNodeBuilder<T> {
 private:
     RBTreeNodePtr<T> to_build;
 public:
@@ -81,22 +90,22 @@ public:
         Reset();
     }
 
-    RBTreeNodeBuilder<T>& SetValue(T value) {
+    RBTreeNodeBuilder<T>& SetValue(T value) override {
         this->to_build->_value = std::move(value);
         return *this;
     }
 
-    RBTreeNodeBuilder<T>& SetLeft(const BinaryTreeNodePtr<T> left){
+    RBTreeNodeBuilder<T>& SetLeft(const RBTreeNodePtr<T> left){
         this->to_build->_left = left;
         return *this;
     }
 
-    RBTreeNodeBuilder<T>& SetRight(const BinaryTreeNodePtr<T> right){
+    RBTreeNodeBuilder<T>& SetRight(const RBTreeNodePtr<T> right){
         this->to_build->_right = right;
         return *this;
     }
 
-    RBTreeNodeBuilder<T>& SetParent(const BinaryTreeNodePtr<T> parent){
+    RBTreeNodeBuilder<T>& SetParent(const RBTreeNodePtr<T> parent){
         this->to_build->_parent = parent;
         return *this;
     }
@@ -106,13 +115,13 @@ public:
         return *this;
     }
 
-    void Reset() {
+    void Reset() override {
         to_build = std::make_shared<RBTreeNode<T>>();
     }
 
     operator RBTreeNodePtr<T>() {
         auto res = to_build;
         Reset();
-        return std::move(this->to_build);
+        return std::move(res);
     }
 };
